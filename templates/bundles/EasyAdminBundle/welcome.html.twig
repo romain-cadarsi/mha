@@ -1,0 +1,160 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title 'Welcome to EasyAdmin 3' %}
+{% block page_content %}
+
+
+
+    <style type="text/css">
+        @page { size: 21cm 29.7cm; margin: 2cm }
+        p { margin-bottom: 0.25cm; line-height: 115%; background: transparent }
+        h3 { margin-top: 0.25cm; margin-bottom: 0.21cm; background: transparent; page-break-after: avoid }
+        h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt; font-weight: bold }
+        h3.cjk { font-family: "Noto Sans CJK SC"; font-size: 14pt; font-weight: bold }
+        h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt; font-weight: bold }
+        h2 { margin-top: 0.35cm; margin-bottom: 0.21cm; background: transparent; page-break-after: avoid }
+        h2.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt; font-weight: bold }
+        h2.cjk { font-family: "Noto Sans CJK SC"; font-size: 16pt; font-weight: bold }
+        h2.ctl { font-family: "Lohit Devanagari"; font-size: 16pt; font-weight: bold }
+        a:link { color: #000080; so-language: zxx; text-decoration: underline }
+    </style>
+
+<p align="center" style="margin-top: 0.42cm; margin-bottom: 0.21cm; line-height: 100%; page-break-after: avoid">
+    <br/>
+    <br/>
+
+</p>
+<h2 class="western">Fonctionnement de l’application (en général)</h2>
+<p><br/>
+    <br/>
+
+</p>
+<p>L’application utilise Symfony 5, pour faire simple et pas trop
+    entrer dans les détails, je vais aborder les fonctionnalités
+    principales de l’application. Si vous voulez un manuel détaillé,
+    n’hésitez pas à me le demander.</p>
+<h3 class="western">- Création d’une commande&nbsp;:</h3>
+<p>Le client peut créer une commande directement via le formulaire
+    d’accueil&nbsp;. Le client doit sélectionner une adresse de
+    départ, une adresse d’arrivée et une date/heure afin de
+    déterminer le trajet aller au minimum. Le client peut sélectionner
+    un retour, dans ce cas il choisis une date/heure et le départ du
+    retour sera l’arrivée de l’aller et vice/versa.</p>
+<h3 class="western">- Estimation des prix&nbsp;:</h3>
+<p>L’affichage des estimations des prix se basent sur cette
+    formule, que l’on m’a fait passer&nbsp;:
+</p>
+<p>Prix = kms * 1,70 + (5€ pour un trajet de jour / 10€ pour un
+    trajet de nuit)</p>
+<h3 class="western">- Google maps API&nbsp;:</h3>
+<p>L’affichage, la détermination de la longueur du trajet et
+    l’auto-completion des adresses se fait grâce à Google maps. L’API
+    utilisé est payante à l’utilisation, donc en fonction du nombre
+    de requêtes gérés par les serveurs de google, le prix augmentera.
+    L’API est enregistré sous mon compte, en théorie le nombre de
+    requête devrait pas être énorme et le prix ne devrait pas être
+    très important, mais dans tous les cas je vous ferai des retours
+    mensuels et en fonction des statistiques on mettra en place un moyen
+    de faciliter ça.
+</p>
+<p><i>*</i><i>Une API est un moyen d’intégrer des services
+        externes (ici Google maps) dans une autre application. Le serveur qui
+        execute les services reste Google, et pas MHA, d’où les frais
+        possibles.</i></p>
+<p><br/>
+    <br/>
+
+</p>
+<h3 class="western">- Envoi de mail</h3>
+<p style="font-style: normal">Lorsqu’une commande est crée , un
+    mail est envoyé à <a href="mailto:reservation@mha-vtc.fr">reservation@mha-vtc.fr</a>.
+    Il comprendra le nom prenom, date de la commande, adresse
+    départ/arrivée et prix estimé. Il y aura un bouton confirmer pour
+    avertir plus rapidement le client.</p>
+<p style="font-style: normal">Lorsqu’une commande est confirmée,
+    un mail est envoyé au client comprenant un récapitulatif de la
+    commande, et un message disant que le chauffeur à confirmé la
+    course&nbsp;:
+</p>
+<p style="font-style: normal">
+    <br/>
+    <br/>
+
+</p>
+<p style="font-style: normal">Lorsqu’une commande est annulé, un
+    mail est envoyé au client avec un message d’excuse&nbsp;:
+</p>
+<p style="font-style: normal">
+    <br/>
+    <br/>
+
+</p>
+<p style="font-style: normal"><br/>
+    <br/>
+
+</p>
+<p><br/>
+    <br/>
+
+</p>
+<p><br/>
+    <br/>
+
+</p>
+<h3 class="western">- Panneau administrateur&nbsp;:</h3>
+<p><br/>
+    <br/>
+
+</p>
+<p>Un panneau d’administrateur est disponible sur
+    mha-vtc.fr/index.php/admin . Des informations de connexion seront
+    demandées, par défaut&nbsp;:
+</p>
+<p>- admin</p>
+<p>- MHA-vtcDecembre2020*</p>
+<p>Depuis ce panneau, il est possible de voir ce même document et
+    d’avoir accès aux commandes reçues&nbsp;:</p>
+<p>L
+    a
+    seule action que vous devriez devoir faire est cliquer sur le bouton
+    validation de la commande en question. Lorsqu’un switch validation
+    est activé, un mail de confirmation/annulation est envoyé au client
+    à l’adresse mail renseigné, alors prenez garde aux doubles
+    cliques sous peine d’envoyer un message d’annulation non désiré
+    au client.
+</p>
+<p>Les commandes ne sont pour l’instant pas effacés
+    automatiquement, elles resteront jusqu’à ce que vous les effaciez
+    manuellement depuis le panneau d’administration. Pour vous
+    faciliter la tâche et apercevoir plus facilement les commandes à
+    effectuer, on peut activer le switch Effectué, celui ci ne provoque
+    aucun effet et n’est la qu’afin de faciliter la lectures des
+    commandes.</p>
+<p><br/>
+    <br/>
+
+</p>
+<h3 class="western">- Facturation</h3>
+<p>Comme convenu, le paiement se fait lors du trajet.</p>
+<p><br/>
+    <br/>
+
+</p>
+<h3 class="western">Idées d’amélioration pour des projets
+    supplémentaires :
+</h3>
+<p>- Faire le SEO du site afin de faire le référencement et de se
+    faire voir sur Google (urgent si vous n’avez pas d’autre
+    référencement)</p>
+<p>- Ajouter des pages liés à la RGPD (réglementation generale de
+    la protection des données). Plutôt critiques dans le sens ou on
+    stocke des donnée (le moins possible, j’ai négligé l’âge,
+    sexe tout ça pour éviter les problèmes mais c’est toujours mieux
+    de s’assurer et d’être en règle avec la législation).</p>
+<p>- Ajouter des pages Contact/A propos/Conditions generales
+    d’utilisation.</p>
+<p>- Toutes idées
+</p>
+
+{% endblock %}

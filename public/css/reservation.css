@@ -1,0 +1,217 @@
+#map {
+    height: 500px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    display: block;
+    margin: 2px 0;
+    padding: 4px;
+    width: 20rem;
+}
+
+#logo > a > span > img {
+    height: 60px;
+}
+
+#presentation-text:after {
+    position: absolute;
+    background-image: url('/images/logo.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 150px;
+    height: 150px;
+    top: -150px;
+    left: 0;
+    right: 0;
+    content: "";
+    opacity: 1;
+    margin: 0 auto;
+}
+
+.dessin::before {
+    width: 10px;
+    height: 10px;
+    border: 2px solid black;
+    position: absolute;
+    top: -13px;
+    left: -4px;
+    content: '';
+
+}
+
+
+.wizard > .content {
+    height: calc(100vh - 300px);
+}
+
+.wizard-content, .wizard-content > .row {
+    height: 100% !important;
+}
+
+.visible {
+    display: unset !important;
+}
+
+.card.principal {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 98vh;
+    width: 98vw;
+}
+
+.dessin::after {
+    width: 10px;
+    height: 10px;
+    border: 2px solid black;
+    position: absolute;
+    top: 53px;
+    left: -3px;
+    content: '';
+    border-radius: 15px
+
+}
+
+#retour {
+    display: none
+}
+
+.separator {
+    color: black;
+}
+
+.selected {
+    background-color: #2250fc !important;
+    color: white !important;
+}
+
+#btnAujourdhui, #btnPlusTard {
+    transition: all 0.25s;
+}
+
+.actions.clearfix {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: calc(100vw - 100px);
+    padding: 50px inherit;
+    margin-right: 50px;
+    margin-left: 50px;
+    background-color: white;
+}
+
+#map {
+    height: 400px;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.padding-top {
+    padding-top: 15px;
+}
+
+.timepicker {
+    margin: 0 auto;
+}
+
+
+#map {
+    height: calc(100vh - 350px);
+}
+
+#datetimepicker5 {
+    margin-bottom: 37px;
+}
+
+@media only screen and (max-width: 1000px) {
+    #map {
+        height: calc(100vh - 450px);
+    }
+
+    #prixPrevu {
+        position: fixed;
+        bottom: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wizard[data-style="2"] > .steps ul li:not(.current) a {
+        display: none;
+    }
+
+    .actions.clearfix {
+
+        width: calc(100vw);
+        padding: 15px;
+        background-color: white;
+        margin: unset;
+    }
+
+    .container.big {
+        max-width: unset;
+        padding: unset;
+    }
+
+    .card.principal {
+        margin: 0px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .wizard {
+        padding: unset !important;
+    }
+
+    .wizard > .content {
+        padding-top: 30px;
+        height: calc(100vh - 185px);
+        min-height: unset;
+        margin-bottom: unset;
+    }
+
+    .col-12 {
+        padding: unset !important;
+    }
+
+    .wizard > .steps ul li {
+        margin-bottom: 0px;
+    }
+
+    .wizard.content {
+        padding-top: 10px !important;
+    }
+
+    .when.choosen {
+
+    }
+
+    .toHideOnMobile {
+        display: none;
+    }
+
+    #retour {
+        bottom: 120px;
+        right: 40px;
+    }
+
+    .visiblePhone {
+        display: unset !important;
+    }
+
+
+}

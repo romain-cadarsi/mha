@@ -1,0 +1,160 @@
+{% extends('mha/fullwidth-base2-light.html.twig') %}
+{% block stylesheet %}
+h2{
+    font-size: 34px;
+    letter-spacing: 0;
+    line-height: 38px;
+    margin-bottom: 12px;
+    margin-top: 8px;
+    color: #1f1f1f;
+    text-align:center;
+    }
+    .content{
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: none;
+    line-height: 1.7;
+    letter-spacing: 0;
+    color: #777777;
+    font-family: "Poppins", sans-serif;
+    }
+    figcaption{
+    padding-top: 10px;
+    text-align:center;
+    }
+    blockquote{
+    border-left: 3px solid #2250fc;
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    }
+    .content>ul,.content>ol
+    {
+    padding-left : 30px;
+    }
+    figure>img{
+    width: 100%;
+    height: auto;
+    }
+
+{% endblock %}
+{% block pageContent %}
+    <section id="page-content" class="sidebar-right" style="transform: none;">
+        <div class="container" style="transform: none;">
+            <div class="row" style="transform: none;">
+                <!-- content -->
+                <div class="content col-lg-9">
+                    <!-- Blog -->
+                    <div id="blog" class="single-post">
+                        <!-- Post single item-->
+                        <div class="post-item">
+                            <div class="post-item-wrap">
+                                <div class="post-image" style="text-align: center">
+                                    <a href="#">
+                                        <img alt="" src="{{ asset(blog.image) }}" style="max-height: 440px; width: auto ;max-width: 100%; margin: 0 auto">
+                                    </a>
+                                </div>
+                                <div class="post-item-description">
+                                    <h1 style="text-align: center">{{blog.titleh1 | capitalize()}}</h1>
+                                    <div class="post-meta">
+                                    </div>
+
+                                    {{ blog.displayContent | raw}}
+
+                                </div>
+                                <section id="contact">
+                                    <div class="container">
+                                        <div class="heading-text text-center heading-section">
+                                            <h4 style="font-size: 38px;line-height: 40px;"> Quoi qu'il en soit, optez pour la sécurité et le confort </h4>
+                                            <h4> Choisissez MHA-VTC !</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                <a class="btn" href="{{ path('reservation') }}"> Réserver une course </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <!-- end: Post single item-->
+                    </div>
+                </div>
+                <!-- end: content -->
+                <!-- Sidebar-->
+                <div class="sidebar sticky-sidebar col-lg-3" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 3032px;">
+                    <!--widget newsletter-->
+
+                    <!--end: widget newsletter-->
+                    <!--Tabs with Posts-->
+
+                    <!--End: Tabs with Posts-->
+                    <!-- Twitter widget -->
+
+                    <!-- end: Twitter widget-->
+                    <!--widget tags -->
+
+                    <!--end: widget tags -->
+                    <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: fixed; transform: translateY(-179.73px); top: 0px; width: 245px; left: 834.5px;">
+                        <div class="widget">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs" id="tabs-posts" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#popular" role="tab" aria-controls="popular" aria-selected="true">Populaire</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="tabs-posts-content">
+                                    <div class="tab-pane fade show active" id="popular" role="tabpanel" aria-labelledby="popular-tab">
+                                        <div class="post-thumbnail-list">
+                                            {% for blog in blogs %}
+                                            <div class="post-thumbnail-entry">
+                                                <img alt="" src="{{ asset(blog.image) }}">
+                                                <div class="post-thumbnail-content">
+                                                    <a href="{{ path('showBlog' , {slug : blog.slug}) }}">{{ blog.title | capitalize() }}>{{blog.titleh1 | capitalize()}}</a>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: Sidebar-->
+            </div>
+        </div>
+    </section>
+
+{#    <div id="featuredImage" style="background-image: url('{{ blog.featuredImage.filepath }}') ; width: 100%;height: 200px;background-size: cover;background-position: center;background-repeat: no-repeat;"></div>#}
+{#    <section class="">#}
+
+{#    <div class="entry-content">#}
+
+
+{#        <br>#}
+{#        <h1 style="text-align:center">{{blog.titleh1}}</h1>#}
+{#        <br>#}
+
+
+{#        <div class="container content">#}
+{#            {{ blog.displayContent | raw}}#}
+{#        </div>#}
+{#        <section id="contact">#}
+{#            <div class="container">#}
+{#                <div class="heading-text text-center heading-section">#}
+{#                    <h4 style="font-size: 38px;line-height: 40px;"> Quoi qu'il en soit, optez pour la sécurité et le confort </h4>#}
+{#                    <h4> Choisissez MHA-VTC !</h4>#}
+{#                </div>#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-12 text-center">#}
+{#                        <a class="btn" href="{{ path('reservation') }}"> Réserver une course </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </section>#}
+{#    </div>#}
+{#    </section>#}
+{% endblock %}

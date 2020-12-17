@@ -1,0 +1,230 @@
+{% extends('mha/fullwidth-base.html.twig') %}
+ {% block canonical %}
+     <link rel="canonical" href="https://mha-vtc.fr/index.php" />
+ {% endblock %}
+
+{% block pageContent %}
+    <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-fade="true">
+        <!-- Slide 1 -->
+        <div class="slide kenburns" data-bg-image="{{ asset('/images/5ec78f4653946.png.webp') }}">
+            <div class="bg-overlay"></div>
+            <div class="container">
+                <div id="presentation-text" class="slide-captions text-center text-light">
+                    <!-- Captions -->
+                    <h1>M.H.A Transport VTC</h1>
+                    <p> Nous sommes soucieux de votre confort. </p>
+                    <div><a href="{{ path('reservation') }}" class="btn scroll-to">Reserver un trajet</a></div>
+                    </span>
+                    <!-- end: Captions -->
+                </div>
+            </div>
+        </div>
+        <!-- end: Slide 1 -->
+    </div>
+    <!--end: Inspiro Slider -->
+    <!-- WELCOME -->
+    <section id="reserver"  style="padding: 150px 0;">
+        <div class="container">
+            <div class="heading-text text-center heading-section">
+                <h2> Réserver un trajet </h2>
+                <h4 style="font-size: 22px;"> Un trajet à faire dans Toulouse et son agglomération ? </h4>
+                <h4 style="font-size: 22px;"> Réservez une course rapidement et en toute sécurité avec MHA-vtc !</h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a class="btn btn-lg" href="{{ path('reservation')}}">Réserver</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="p-b-0">
+        <div class="container" style="padding-bottom: 30px;">
+            <div class="heading-text heading-section">
+                <h2>Pour tous vos trajets à Toulouse.</h2>
+                <span class="lead">Nous prennons en charge tous vos déplacements dans Toulouse et son agglomération. Cela comprends les trajets
+                reliant les points importants de la ville tels que l'aéroport ou la gare, mais également les trajets quotidiens en tout genre, vous pouvez
+                compter sur nous.</span>
+            </div>
+        </div>
+        <div class="portfolio">
+            <!-- Portfolio Items -->
+            <div id="portfolio" class="grid-layout portfolio-4-columns" data-margin="0">
+                <!-- portfolio item -->
+                <div class="portfolio-item img-zoom ct-marketing ct-media ct-branding ct-marketing ct-webdesign">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ asset('/images/508 gt (1).jpg.webp') }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a href="#">
+                                <h3>508 GT</h3>
+                                <span>Un confort maximum.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: portfolio item -->
+                <!-- portfolio item -->
+                <div class="portfolio-item img-zoom ct-marketing ct-media ct-branding ct-marketing ct-webdesign">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ asset('/images/5ec78fb10161c.png.webp') }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a href="#">
+                                <h3>Professionnalisme</h3>
+                                <span>Notre savoir faire de chauffeur privé.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: portfolio item -->
+                <!-- portfolio item -->
+                <div class="portfolio-item img-zoom ct-marketing ct-media ct-branding ct-marketing ct-webdesign">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ asset('/images/5ecb622d1b814.png.webp') }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a href="#">
+                                <h3>Destination libre</h3>
+                                <span>Choisissez où aller à Toulouse.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: portfolio item -->
+                <!-- portfolio item -->
+                <div class="portfolio-item img-zoom ct-marketing ct-media ct-branding ct-marketing ct-webdesign">
+                    <div class="portfolio-item-wrap">
+                        <div class="portfolio-image">
+                            <a href="#"><img src="{{ asset('/images/5ecb627b8b892.png.webp') }}" alt=""></a>
+                        </div>
+                        <div class="portfolio-description">
+                            <a href="#">
+                                <h3>Organisation</h3>
+                                <span>Ne soyez plus jamais en retard.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end: portfolio item -->
+            </div>
+            <!-- end: Portfolio Items -->
+        </div>
+    </section>
+    <!-- end: PORTFOLIO -->
+    <!-- WHAT WE DO -->
+    <section class="background-grey" id="Apropos">
+        <div class="container">
+            <div class="heading-text heading-section">
+                <h2>Qui sommes nous ? </h2>
+                <span class="lead">À propos de M.H.A Transport</span>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div data-animate="fadeInUp" data-animate-delay="0">
+                        <div class="icon-box effect medium border center" style="width:100%">
+                            <div class="icon"> <a href="#"><i class="fa fa-car"></i></a> </div>
+                        </div>
+                        <h4>Transport privé Toulouse</h4>
+
+                        <p>M.H.A Transport est une société de VTC mettant à
+                            disposition des chauffeurs privés sur Toulouse et son
+                            agglomération.
+                            Nous vous proposons un service de transport de
+                            personnes de qualité à des prix abordables.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div data-animate="fadeInUp" data-animate-delay="200">
+                        <div class="icon-box effect medium border center" style="width:100%">
+                            <div class="icon"> <a href="#"><i class="fas fa-star"></i></a> </div>
+                        </div>
+                        <h4>Un service d'exception</h4>
+                        <p> Les services
+                            proposés concernent aussi bien les particuliers que les
+                            entreprises. À bord, nous disposons d'un certain nombre
+                            d'avantages : chargeur USB, climatisation, eau, sièges
+                            homologués pour enfants, paiement sans contact, gel
+                            antibactérien, afin de maximiser votre confort lors du trajet.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div data-animate="fadeInUp" data-animate-delay="400">
+
+                        <div class="icon-box effect medium border center" style="width:100%">
+                            <div class="icon"> <a href="#"><i class="fa fa-shield-alt"></i></a> </div>
+                        </div>
+                        <h4>Votre sécurité est notre préocuppation</h4>
+                        <p>En outre, au regard de la crise sanitaire que nous
+                            vivons actuellement, les véhicules sont totalement désinfecté
+                            après chaque trajet effectué. La sécurité des personnes
+                            transportées étant notre priorité, le port du masque est donc
+                            obligatoire à la fois pour les personnes transportées que pour
+                            les Chauffeurs. Pour permettre à tout le monde de se déplacer
+                            en toute sécurité.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- END WHAT WE DO -->
+
+    <!-- COUNTERS -->
+    <section class="text-light p-t-150 p-b-150 " data-bg-parallax="{{ asset('/images/5ec78bc256220.png.webp') }}">
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <div class="icon"><i class="fa fa-3x fa-road"></i></div>
+                        <div class="counter"> <span data-speed="1000" data-refresh-interval="50" data-to="25012" data-from="20000" data-seperator="true"></span> </div>
+                        <div class="seperator seperator-small"></div>
+                        <p>KMs PARCOURU</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <div class="icon"><i class="fa fa-3x  fa-smile-beam"></i></div>
+                        <div class="counter"> <span data-speed="1000" data-refresh-interval="42" data-to="2231" data-from="2000" data-seperator="true"></span> </div>
+                        <div class="seperator seperator-small"></div>
+                        <p>Clients satisfaits </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end: COUNTERS -->
+    <section id="contact" style="padding: 100px 0;">
+        <div class="container">
+            <div class="heading-text text-center heading-section">
+                <h2> Contactez nous </h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a class="btn" href="mailto:chauffeur@mha-vtc.fr"> Envoyez nous un mail !</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="modalStripBottom" class="modal-strip modal-bottom">
+        <div class="container">
+
+            <div class="text-center">
+                Réouverture des réservations le 8 Septembre, Nous vous présentons toutes nos excuses pour ce désagrément.
+                <div>
+                    <a href="#" data-modal="#modalStripBottom" class="btn-modal" style="padding: 10px"><span class="fa fa-times"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

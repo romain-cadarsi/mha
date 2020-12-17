@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mha-vtc.fr/sitemap.xml.gz

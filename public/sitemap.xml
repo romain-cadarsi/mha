@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator-class="Icamys\SitemapGenerator\SitemapGenerator" -->
+<!-- generator-version="2.0.3" -->
+<!-- generated-on="2020-12-09T23:06:20+01:00" -->
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <url>
+    <loc>https://mha-vtc.fr/index.php</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/confidentialite</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/cgv</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/reservation</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/blog/depart-aeroport-toulouse</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/blog/uber-toulouse</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mha-vtc.fr/index.php/blog/taxi-toulouse</loc>
+    <lastmod>2020-12-09T23:06:20+01:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

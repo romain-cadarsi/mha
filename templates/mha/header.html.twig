@@ -1,0 +1,42 @@
+<div class="container">
+    <!--Logo-->
+    <div id="logo"> <a href="{{ path('index') }}"><span class="logo-default"><img src="/images/logoNoir.png"></span><span class="logo-dark"><img src="/images/logo.png"></span></a> </div>
+    <!--End: Logo-->
+    <!--Navigation Resposnive Trigger-->
+    <div id="mainMenu-trigger">
+        <a class="lines-button x"><span class="lines"></span></a>
+    </div>
+    <!--end: Navigation Resposnive Trigger-->
+    <!--Navigation-->
+    <div id="mainMenu">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li class="dropdown"><a href="{{ path('reservation') }}">Réserver</a>
+                    </li>
+
+                    <li class="dropdown"><a href="{{ path('index') }}#Apropos">A propos</a>
+                    </li>
+                    <li class="dropdown"><a href="{{ path('index') }}#contact">Contact</a>
+                    </li>
+
+                    <li class="dropdown"><a >Questions / Réponses</a>
+
+                        <ul class="dropdown-menu">
+                            {% for  blog in  blogsService.getAllBlogs %}
+                                <li><a href="{{ path('showBlog' , {slug : blog.slug}) }}">{{ blog.title | capitalize() }}</a></li>
+                            {% endfor %}
+
+                        </ul>
+
+
+                    </li>
+
+
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!--end: Navigation-->
+</div>

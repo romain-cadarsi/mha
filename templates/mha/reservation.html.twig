@@ -1,0 +1,110 @@
+<form id="wizard1" class="wizard needs-validation clear-fix" role="application">
+    <!--Step 1-->
+    <h3>Aller</h3>
+    <div class="wizard-content">
+        <div class="h5 mb-4">Dites nous où vous récuperer, et où vous déposer.</div>
+        <div>
+            <input id="origin-input" class="controls" type="text"
+                   placeholder="Entrez un point de départ">
+
+            <input id="destination-input" class="controls" type="text"
+                   placeholder="Entrez un point d'arrivée">
+
+        </div>
+
+        <div id="map"></div>
+        <div id="infowindow-content">
+            <span id="place-name"  class="title"></span><br>
+            <span id="place-address"></span>
+        </div>
+        <div class="h5 mb-4">Ce sera pour quand?</div>
+        <div class="form-group">
+            <label>Date aller</label>
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                <input required="" type="text" class="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1" placeholder="Selectionnez une date de départ">
+            </div>
+        </div>
+        </br>
+        <div class="icon-box effect medium border center" style="width:100%">
+            <div class="icon"> <a href="#"><i class="fa fa-car"></i></a> </div>
+            <H2><span id="prixAller"> 0 </span><span>€</span></H2>
+            <p>Le prix affiché est à titre estimatif.</p>
+        </div>
+    </div>
+
+    <h3>Retour</h3>
+
+    <div class="wizard-content">
+        <div class="h5 mb-4">Y aura t'il un retour ? </div>
+        <input type="checkbox" id="retourSwitch">
+        <div id="retour-informations" class="hidden">
+
+            <div class="h5 mb-4">Ce sera pour quand ?</div>
+            <div class="form-group">
+                <label>Date retour</label>
+                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2" placeholder="Selectionnez une date de retour">
+                </div>
+            </div>
+            </br>
+            <div class="icon-box effect medium border center" style="width:100%">
+                <div class="icon"> <a href="#"><i class="fa fa-car"></i></a> </div>
+                <H2><span id="prixRetour"> 0 </span><span>€</span></H2>
+                <p>Le prix affiché est à titre approximatif.</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <h3>Informations personnelles</h3>
+    <div class="wizard-content">
+        <div class="h5 mb-4">Entrez vos informations personnelles ci-dessous</div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="username">NOM Prénom</label>
+                <input id = 'inputName' type="text" class="form-control" name="nom" value="" placeholder="NOM Prénom" required="">
+
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Adresse email</label>
+                <input type="email" id = "inputEmail" class="form-control" name="email" value="" placeholder="email@exemple.com" required="">
+                <small id="emailHelp" class="form-text text-muted">Uniquement pour vous transmettre une réponse.</small>
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="telephone">Telephone</label>
+                <input class="form-control" id="inputPhone" type="tel" value="" name="telephone" placeholder="01 02 03 04 05" required="">
+                <small id="emailHelp" class="form-text text-muted">Nous ne vous contacterons qu'en cas d'urgence ou pour confirmer votre réservation.</small>
+            </div>
+        </div>
+    </div>
+    <!--end: Step 1-->
+    <!--Step 2-->
+    <h3>Confirmation</h3>
+    <div class="wizard-content">
+        <div class="h5 mb-4">Confirmation</div>
+        <p> Vos informations : </p>
+        <p> - Votre nom : <span id="Cname" class="bold"></span></p>
+        <p> - Votre adresse eMail : <span id = "Cmail" class="bold"></span></p>
+        <p> - Votre Numéro de télephone : <span id="Cphone" class="bold"></span></p>
+        <p> Votre commande : </p>
+        <p> 1 aller <span id="CallerRetour" class="bold"></span> de <span id="Cdepart" class="bold"></span> à <span id="Carrivee" class="bold"></span></p>
+        <p> - Le <span id="Cdatedepart" class="bold"> </span></p>
+        <p> - <span id="Cretour" class="bold">Vous n'avez pas choisi de retour. </span></p>
+        <br>
+        <div class="icon-box effect medium border center" style="width:100%">
+            <div class="icon"> <a href="#"><i class="fa fa-car"></i></a> </div>
+            <H2><span id="prixTotal"> 0 </span><span>€</span></H2>
+            <p>Le prix affiché est à titre approximatif.</p>
+        </div>
+
+    </div>
+    <!--end: Step 2-->
+
+</form>
+
+
+
