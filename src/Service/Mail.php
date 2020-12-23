@@ -31,7 +31,9 @@ class Mail{
         $dateFin = new \DateTime();
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
-        $dateDebutString =  date_format($commande->getDate(),"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
+        $dateDebut = new \DateTime();
+        date_timestamp_set($dateDebut,$commande->getDate()->getTimestamp());
+        $dateDebutString =  date_format($dateDebut,"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
@@ -95,7 +97,9 @@ class Mail{
         $dateFin = new \DateTime();
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
-        $dateDebutString =  date_format($commande->getDate(),"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
+        $dateDebut = new \DateTime();
+        date_timestamp_set($dateDebut,$commande->getDate()->getTimestamp());
+        $dateDebutString =  date_format($dateDebut,"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
