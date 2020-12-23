@@ -1,7 +1,18 @@
-{% extends('mha/fullwidth-base.html.twig') %}
+{% extends('mha/bases/base.html.twig') %}
  {% block canonical %}
      <link rel="canonical" href="https://mha-vtc.fr/index.php" />
+     <link href="{{ asset('css/reservation.css') }}" rel="stylesheet">
  {% endblock %}
+{% block stylesheet %}
+    <style>
+        .timepicker{
+            margin : 0 auto;
+        }
+        .pb20{
+            padding-bottom: 20px;
+        }
+    </style>
+{% endblock %}
 
 {% block pageContent %}
     <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-fade="true">
@@ -14,7 +25,6 @@
                     <h1>M.H.A Transport VTC</h1>
                     <p> Nous sommes soucieux de votre confort. </p>
                     <div><a href="{{ path('reservation') }}" class="btn scroll-to">Reserver un trajet</a></div>
-                    </span>
                     <!-- end: Captions -->
                 </div>
             </div>
@@ -26,13 +36,52 @@
     <section id="reserver"  style="padding: 150px 0;">
         <div class="container">
             <div class="heading-text text-center heading-section">
-                <h2> Réserver un trajet </h2>
+                <h2> Estimer un trajet </h2>
                 <h4 style="font-size: 22px;"> Un trajet à faire dans Toulouse et son agglomération ? </h4>
-                <h4 style="font-size: 22px;"> Réservez une course rapidement et en toute sécurité avec MHA-vtc !</h4>
+                <h4 class="pb20" style="font-size: 22px;"> Estimez le prix de votre course rapidement et en toute sécurité avec MHA-vtc !</h4>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <a class="btn btn-lg" href="{{ path('reservation')}}">Réserver</a>
+                    <div class="card reservation">
+                        <div class = "card-body">
+                            <div class="row">
+                                <div class="col-lg-6 pb20">
+                                    <h2> Où ça ? </h2>
+                                    <div class="row text-center">
+                                        <div class="center">
+                                            <div class="col-12 ">
+                                                <label for="origin-input">Départ</label>
+                                                <div class="row padding-top">
+
+                                                    <input id="origin-input" class="controls" type="text"
+                                                           placeholder="Entrez une adresse de rendez vous">
+                                                </div>
+                                                <label for="destination-input"> Arrivée</label>
+                                                <div class="row padding-top">
+
+                                                    <input id="destination-input" class="controls" type="text"
+                                                           placeholder="Entrez une adresse d'arrivée">
+                                                </div>
+                                                <div id="map" class="hidden"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 center pb20">
+                                    <h2> A quel heure ? </h2>
+                                    <div id="datetimepicker1"></div>
+                                </div>
+                                <div class="col-lg-12 center">
+                                    <div class="icon-box effect medium border center" style="width:100%">
+                                        <div class="icon"> <a href="#"><i class="fa fa-car"></i></a> </div>
+                                        <H2><span id="prixTrajet"> 0 </span><span>€</span></H2>
+                                        <a class="btn hidden reserverMaintenant" > Réserver maintenant !</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -226,5 +275,141 @@
 
 {% endblock %}
 {% block javascript %}
+    <script src="https://cadarsir.fr/m14intelligence/Template/plugins/moment/moment-with-local.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"
+            integrity="sha512-XKgbGNDruQ4Mgxt7026+YZFOqHY6RsLRrnUJ5SVcbWMibG46pPAC97TJBlgs83N/fqPTR0M89SWYOku6fQPgyw=="
+            crossorigin="anonymous"></script>
+    <script src="https://cadarsir.fr/m14intelligence/Template/plugins/bootstrap-datetimepicker/tempusdominus-bootstrap-4.js"></script>
+    <script src="{{ asset('js/reservation.js') }}"></script>
+    <script>
+        let distance = 0;
+    </script>
+    <script>
+    "use strict";
+    function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeControl: false,
+    center: {lat: 43.6115554, lng: 1.4263502},
+    zoom: 13,
+    fullscreenControl: false,
+    streetViewControl: true
+});
 
+
+    new AutocompleteDirectionsHandler(map);
+}
+
+    /**
+    * @constructor
+    */
+    function AutocompleteDirectionsHandler(map) {
+    this.map = map;
+    this.originPlaceId = null;
+    this.destinationPlaceId = null;
+    this.travelMode = 'DRIVING';
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsRenderer = new google.maps.DirectionsRenderer;
+    this.directionsRenderer.setMap(map);
+
+    var originInput = document.getElementById('origin-input');
+    var destinationInput = document.getElementById('destination-input');
+
+    var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+// Specify just the place data fields that you need.
+    originAutocomplete.setFields(['place_id']);
+
+    var destinationAutocomplete =
+    new google.maps.places.Autocomplete(destinationInput);
+// Specify just the place data fields that you need.
+    destinationAutocomplete.setFields(['place_id']);
+
+    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+}
+
+
+
+    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
+    autocomplete, mode) {
+    var me = this;
+    autocomplete.bindTo('bounds', this.map);
+
+    autocomplete.addListener('place_changed', function () {
+    var place = autocomplete.getPlace();
+
+    if (!place.place_id) {
+    window.alert('Veuillez selectionner une adresse dans la liste déroulante');
+    return;
+}
+    if (mode === 'ORIG') {
+    me.originPlaceId = place.place_id;
+} else {
+    me.destinationPlaceId = place.place_id;
+}
+    me.route();
+
+});
+};
+
+    AutocompleteDirectionsHandler.prototype.route = function () {
+    if (!this.originPlaceId || !this.destinationPlaceId) {
+    return;
+}
+    var me = this;
+
+    this.directionsService.route(
+{
+    origin: {'placeId': this.originPlaceId},
+    destination: {'placeId': this.destinationPlaceId},
+    travelMode: this.travelMode
+},
+    function (response, status) {
+    if (status === 'OK') {
+    distance = response.routes[0].legs[0].distance.value;
+    me.directionsRenderer.setDirections(response);
+} else {
+    window.alert('Directions request failed due to ' + status);
+}
+});
+};
+
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            inline: true,
+            sideBySide: true,
+            format: 'LT',
+            stepping: 20,
+            maxDate: moment({h: 24})
+        });
+    });
+    let date = new moment();
+    $('#datetimepicker1').on('change.datetimepicker',function(e){
+        date = e.date;
+        calculatePrice()
+        showReserver();
+    })
+    $('#destination-input').on('change',function () {
+        calculatePrice();
+        showReserver();
+    })
+    $('#origin-input').on('change',function () {
+        calculatePrice();
+        showReserver();
+    })
+
+
+    function calculatePrice(){
+        $('#prixTrajet').html((Math.round((( distance / 1000) * 1.97 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.50 : 5.50 )))
+    }
+
+    $('.reserverMaintenant').on('click',function(){
+        window.location = "{{ path('reservation') }}?estimated=y&oi="+$('#origin-input').val()+"&di="+ $('#destination-input').val()+"&distance="+distance
+    })
+    function showReserver(){
+        if($('#origin-input').val() && $('#destination-input').val()){
+            $('.reserverMaintenant').removeClass('hidden');
+        }
+    }
+
+</script>
 {% endblock %}

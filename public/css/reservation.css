@@ -132,6 +132,9 @@
 #datetimepicker5 {
     margin-bottom: 37px;
 }
+#reservationCard{
+    width: 100vw;height: 100vh;
+}
 
 @media only screen and (max-width: 1000px) {
     #map {
@@ -150,6 +153,9 @@
     .wizard[data-style="2"] > .steps ul li:not(.current) a {
         display: none;
     }
+    #reservationCard{
+        height: unset;
+    }
 
     .actions.clearfix {
 
@@ -158,6 +164,12 @@
         background-color: white;
         margin: unset;
     }
+    .actions.clearfix {
+
+        bottom: 0px;
+
+    }
+
 
     .container.big {
         max-width: unset;
@@ -166,10 +178,11 @@
 
     .card.principal {
         margin: 0px;
-        position: fixed;
+        position: relative;
         top: 0;
         left: 0;
-        height: 100vh;
+        min-height: 100vh;
+        height: 100%;
         width: 100vw;
     }
 
@@ -179,9 +192,9 @@
 
     .wizard > .content {
         padding-top: 30px;
-        height: calc(100vh - 185px);
+        height: 100%;
         min-height: unset;
-        margin-bottom: unset;
+        margin-bottom: 50px;
     }
 
     .col-12 {

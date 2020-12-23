@@ -62,6 +62,7 @@ let disabledDates = [new Date(2020, 7, 28)
 ];
 
 let reservation = new Reservation();
+$('body').trigger('reservationCreated')
 $('#datetimepicker1').on('change.datetimepicker', function(e){
     reservation.setDate(e.date)
 })

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -66,6 +68,21 @@ class Commande
      * @ORM\Column(type="string", length=255)
      */
     private $code;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Paiement::class, mappedBy="commande")
+     */
+    private $paiements;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $paiementMethod;
+
+    public function __construct()
+    {
+        $this->paiements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -188,6 +205,48 @@ class Commande
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Paiement[]
+     */
+    public function getPaiements(): Collection
+    {
+        return $this->paiements;
+    }
+
+    public function addPaiement(Paiement $paiement): self
+    {
+        if (!$this->paiements->contains($paiement)) {
+            $this->paiements[] = $paiement;
+            $paiement->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): self
+    {
+        if ($this->paiements->removeElement($paiement)) {
+            // set the owning side to null (unless already changed)
+            if ($paiement->getCommande() === $this) {
+                $paiement->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPaiementMethod(): ?string
+    {
+        return $this->paiementMethod;
+    }
+
+    public function setPaiementMethod(string $paiementMethod): self
+    {
+        $this->paiementMethod = $paiementMethod;
 
         return $this;
     }

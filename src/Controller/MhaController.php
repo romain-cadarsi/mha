@@ -27,7 +27,7 @@ class MhaController extends AbstractController
      */
     public function index()
     {
-        return $this->render('mha/home.html.twig', [
+        return $this->render('mha/pages/home.html.twig', [
             'controller_name' => 'MhaController',
         ]);
     }
@@ -38,7 +38,7 @@ class MhaController extends AbstractController
     public function confidentialite()
     {
 
-        return $this->render('mha/rgpd.html.twig', [
+        return $this->render('mha/pages/rgpd.html.twig', [
         ]);
     }
 
@@ -48,7 +48,7 @@ class MhaController extends AbstractController
     public function cgv()
     {
 
-        return $this->render('mha/CGV.html.twig', [
+        return $this->render('mha/pages/CGV.html.twig', [
         ]);
     }
 
@@ -91,7 +91,7 @@ class MhaController extends AbstractController
         if (!$blog) {
             return $this->render('bundles/TwigBundle/Exception/error404.html.twig');
         } else {
-            return $this->render('mha/blog.html.twig', [
+            return $this->render('mha/pages/blog.html.twig', [
                     'blog' => $blog,
                     'blogs' => $blogs]
             );

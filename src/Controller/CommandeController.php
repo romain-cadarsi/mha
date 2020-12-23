@@ -4,22 +4,27 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Commande;
+use App\Entity\Paiement;
+use App\Repository\CommandeRepository;
 use App\Service\ClientService;
 use App\Service\Mail;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\Stripe;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommandeController extends MhaController
 {
     /**
-     * @Route("/xhr/storeCommande", name="store commande")
+     * @Route("/xhr/storeCommande", name="storeCommande")
      */
     public function storeCommande(Request $request, EntityManagerInterface $entityManager, ClientService $clientService, Mail $mailService)
     {
         $commande = new Commande();
         $user = null;
+        $response = '';
         $result = json_decode($request->get("reservation"), true);
         date_default_timezone_set("Europe/Paris");
         $date = date_create($result['_date'], new \DateTimeZone('Europe/Paris'));
@@ -29,8 +34,8 @@ class CommandeController extends MhaController
             ->setEmail($result['_mail'])
             ->setNomPrenom($result['_nom'] . " " . $result['_prenom'])
             ->setTelephone($result['_numero'])
-            ->setPrixApproximatif($result['_prix'])
             ->setDepart($result['_adresseDepart'])
+            ->setPrixApproximatif($this->getPrix($this->getDistance($commande->getDepart(),$commande->getArrivee()),intval(date_format($commande->getDate(),"H"))))
             ->setValidation(false)
             ->setCode(bin2hex(random_bytes(16)));
         if (!$clientService->findIfExists($commande->getEmail())) {
@@ -43,14 +48,57 @@ class CommandeController extends MhaController
             $user = $entityManager->getRepository(Client::class)->findOneBy(['mail' => $commande->getEmail()]);
             $user->setPoints($user->getPoints() + $commande->getPrixApproximatif());
         }
-        $entityManager->persist($commande);
-        $entityManager->persist($user);
-        $entityManager->flush();
+        if($result['_paiementMethod'] == "carte"){
+            $paiement = new Paiement();
+            $paiement->setPaid(false)
+                ->setAt(new \DateTime())
+                ->setCommande($commande)
+                ->setPrix($commande->getPrixApproximatif())
+                ->setCode('tmp');
 
-        $mailService->sendMHAMail($commande);
+            $commande->setPaiementMethod('carte');
+            $entityManager->persist($paiement);
+            $entityManager->persist($commande);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $options = [
+                'payment_method_types' => ['card'],
+                'line_items' => [],
+                'mode' => 'payment',
+                'success_url' => $this->generateUrl('reservationPayee',[],UrlGeneratorInterface::ABSOLUTE_URL)."?commandeId=".$commande->getId()."&session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' =>  $this->generateUrl('reservationAnnulee',[],UrlGeneratorInterface::ABSOLUTE_URL),
+            ];
 
-        return $this->render('blank.html.twig', [
-        ]);
+            Stripe::setApiKey('sk_test_51Hyj67C4cFJem7nUwzkizEhPKPFQcqiCNQPSbChR6XqHqTjeB8UWofSeoZuxCVWIJGIsHSIBugeZYrgCpx36C7d800nbFOrDcV');
+
+            array_push($options['line_items'],
+                [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => "Trajet le " . date_format($commande->getDate(),'d/m H:i') . " de " . $commande->getDepart() . " à ". $commande->getArrivee(),
+                        ],
+                        'unit_amount' => $commande->getPrixApproximatif() * 100,
+                    ],
+                    'quantity' => 1 ,
+                ]);
+            $stripe = (\Stripe\Checkout\Session::create($options));
+            $paiement->setCode($stripe['id']);
+            $entityManager->persist($commande);
+            $entityManager->flush();
+            $response = json_encode($stripe);
+
+        }
+        else{
+            $commande->setPaiementMethod('espece');
+            $entityManager->persist($commande);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $response = $this->generateUrl('reservationEnvoyee')."?commandeId=".$commande->getId();
+            $mailService->sendMHAMail($commande);
+        }
+
+        return new Response($response);
     }
 
     /**
@@ -78,7 +126,7 @@ class CommandeController extends MhaController
      */
     public function reservation()
     {
-        return $this->render('mha/reservationWebApp.html.twig');
+        return $this->render('mha/pages/reservationWebApp.html.twig');
     }
 
 
@@ -109,6 +157,33 @@ class CommandeController extends MhaController
 
 
     }
+
+    function getDistance($from,$to){
+        // Google API key
+        $apiKey = 'AIzaSyBT7jEnTsN1qsD6et-UlFFtugaGXomXdDc';
+        // Change address format
+        $formattedAddrFrom    = str_replace(' ', '+',$from);
+        $formattedAddrTo     = str_replace(' ', '+', $to);
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$formattedAddrFrom&destinations=$formattedAddrTo&mode=driving&sensor=false&key=$apiKey";
+
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+      return ( json_decode($response, true)['rows'][0]['elements'][0]['distance']['value']);
+
+    }
+
+    function getPrix($distance,$horaire){
+        return (round((( $distance / 1000) * 1.97 )) + (($horaire > 18 || $horaire < 6) ? 10.5 : 5.5 ));
+    }
+
+
 
 
 }

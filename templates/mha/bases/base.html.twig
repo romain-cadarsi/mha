@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {{ include('mha/components/head.html.twig') }}
+    {% block stylesheet %}
+    {% endblock %}
+
+    <style>
+        #map {
+            height: 500px;
+        }
+        .bold{
+            font-weight: 700;
+        }
+        .bootstrap-datetimepicker-widget.dropdown-menu {
+            display: block;
+            margin: 2px 0;
+            padding: 4px;
+            width: 20rem;
+        }
+        #logo>a>span>img{
+            height: 60px;
+        }
+        #presentation-text:after{
+            position: absolute;
+            background-image: url('/images/logo.png.webp');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width: 150px;
+            height: 150px;
+            top: -150px;
+            left: 0;
+            right: 0;
+            content: "";
+            opacity: 1;
+            margin: 0 auto;
+        }
+        .card.reservation label{
+            padding-top : 20px;
+        }
+    </style>
+</head>
+
+{% block body %}
+<body>
+<div class="body-inner">
+
+
+    <header id="header" data-fullwidth="true" {% if blog is not defined %}{% if light is defined %} class="light" {% else %}  data-transparent="true" class="dark"{% endif %} {% endif %}>
+        <div class="header-inner">
+            {% block header %}
+                {% include('mha/components/header.html.twig') %}
+            {% endblock %}
+        </div>
+    </header>
+
+    {% block pageContent %}
+    {% endblock %}
+
+    <footer>
+        {% include('mha/components/footer.html.twig') %}
+    </footer>
+
+</div>
+
+<a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+<!--Plugins-->
+<script>
+
+</script>
+{{ include('mha/components/js.html.twig') }}
+{% block javascript %}
+{% endblock %}
+
+</body>
+{% endblock %}
+
+</html>

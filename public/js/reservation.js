@@ -9,6 +9,7 @@ class Reservation {
     _numero;
     _mail;
     _distance;
+    _paiementMethod;
 
     constructor() {
     }
@@ -48,7 +49,7 @@ class Reservation {
     }
 
     setPrix(distance,date) {
-        this._prix = (Math.round((( distance / 1000) * 1.7 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10 : 5 ))
+        this._prix = (Math.round((( distance / 1000) * 1.97 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.5 : 5.5 ))
         $('#prix').html(this._prix);
     }
 
@@ -98,6 +99,14 @@ class Reservation {
         if (this._date){
             this.setPrix(this._distance,this._date)
         }
+    }
+
+    getPaiementMethod() {
+        return this._paiementMethod;
+    }
+
+    setPaiementMethod(value) {
+        this._paiementMethod = value;
     }
 
     fillConfirmation(){

@@ -1,0 +1,63 @@
+{% extends('mha/bases/base.html.twig') %}
+{% block pageContent %}
+    <section id="page-title" class="text-light" style="background-image: url('{{ asset('images/5ec78fb10161c.png') }}');background-size: cover;background-position: center;">
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="page-title">
+                <h1>Reservation enregistrée</h1>
+                <span>MHA-VTC vous remercie de votre confiance, votre réservation est enregistrée</span>
+            </div>
+        </div>
+    </section>
+    <section id="shop-checkout-completed">
+        <div class="container">
+            <div class="p-t-10 m-b-20 text-center">
+                <div class="text-center">
+                    <h3>Votre réservation est enregistrée ! </h3>
+                    <p>Vous recevrez très bientôt un mail du chauffeur pour confirmer votre prise en charge, nous nous occupons du reste</p>
+                    <p>MHA-VTC vous souhaite une excellente journée.</p>
+                </div>
+            </div>
+            <h4 class="upper">Votre réservation</h4>
+            <div class="table table-sm table-striped table-responsive table table-bordered table-responsive">
+                <table class="table m-b-0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div>Adresse de rendez vous</div>
+                        </td>
+                        <td>
+                            <p><span id="confirmationAller"> {{ commande.depart}} </span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Adresse d'arrivée</div>
+                        </td>
+                        <td>
+                            <p><span id="confirmationDepot">{{ commande.arrivee}} </span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Quand ? </div>
+                        </td>
+                        <td>
+                            <p><span id="confirmationDate"> {{ commande.date | date('d/m H:i')}} </span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Vos informations </div>
+                        </td>
+                        <td>
+                            <p><b>Nom et prénom : </b><span id="confirmationNom"> {{ commande.nomPrenom }}</span><br>
+                                <b>Mail : </b><span id="confirmationMail">{{ commande.email}} </span> <br><b>Telephone : </b> <span id="confirmationTelephone">{{ commande.telephone}} </span></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}
