@@ -26,7 +26,6 @@ class CommandeController extends MhaController
         $user = null;
         $response = '';
         $result = json_decode($request->get("reservation"), true);
-        date_default_timezone_set("Europe/Paris");
         $date = date_create($result['_date'], new \DateTimeZone('Europe/Paris'));
         $commande->setArrivee($result['_adresseArrivee'])
             ->setDate($date)
