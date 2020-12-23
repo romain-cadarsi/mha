@@ -17,7 +17,6 @@ class Mail{
     public function __construct(MailerInterface $mailer,Environment $twig){
         $this->mailer = $mailer;
         $this->twig = $twig;
-        date_default_timezone_set("Europe/Paris");
     }
 
     /** Nouvelle commande non payée, destiné au chauffeur
