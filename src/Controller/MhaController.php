@@ -43,12 +43,24 @@ class MhaController extends AbstractController
     }
 
     /**
+     * @Route("/cgu", name="CGU")
+     */
+    public function CGU()
+    {
+
+        return $this->render('mha/pages/CGU.html.twig', [
+            'light' => true
+        ]);
+    }
+
+    /**
      * @Route("/cgv", name="CGV")
      */
-    public function cgv()
+    public function CGV()
     {
 
         return $this->render('mha/pages/CGV.html.twig', [
+            'light' => true
         ]);
     }
 
