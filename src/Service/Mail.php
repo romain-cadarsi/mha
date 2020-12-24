@@ -41,12 +41,17 @@ class Mail{
 
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
-            ->to('cadarsir@gmail.com')
             ->subject("Nouvelle commande de " . $commande->getNomPrenom())
             ->html($this->twig->render('/mha/mail/commandePassee.html.twig',[
                 'commande' => $commande,
                 'lien' => $lien
             ]));
+        if($commande->getEmail() == "cadarsir@gmail.com"){
+            $email->to("cadarsir@gmail.com");
+        }
+        else{
+            $email->to("chauffeur@mha-vtc.fr");
+        }
         $email->ensureValidity();
         $this->mailer->send($email);
 
@@ -107,12 +112,17 @@ class Mail{
 
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
-            ->to('cadarsir@gmail.com')
             ->subject("Nouvelle réservation Payée de " . $commande->getNomPrenom())
             ->html($this->twig->render('/mha/mail/commandePayee.html.twig',[
                 'commande' => $commande,
                 'lien' => $lien
             ]));
+        if($commande->getEmail() == "cadarsir@gmail.com"){
+            $email->to("cadarsir@gmail.com");
+        }
+        else{
+            $email->to("chauffeur@mha-vtc.fr");
+        }
         $email->ensureValidity();
         $this->mailer->send($email);
 
