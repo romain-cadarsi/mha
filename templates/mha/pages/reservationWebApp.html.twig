@@ -403,6 +403,18 @@
             })
         }
 
+        if (getParameterByName('estimated') === 'dev'){
+            $('body').on('reservationCreated',function (){
+                $('#origin-input').val(getParameterByName('oi'))
+                reservation.setAddresseDepart(getParameterByName('oi'))
+                $('#destination-input').val(getParameterByName('di'))
+                reservation.setAdresseArrivee(getParameterByName('di'))
+                reservation.setDistance(getParameterByName('distance'))
+                $('#wizard3').steps('next')
+                INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
+            })
+        }
+
 
     </script>
 
