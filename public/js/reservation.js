@@ -1,17 +1,18 @@
 class Reservation {
 
-    _adresseDepart;
-    _adresseArrivee;
-    _date;
-    _prix;
-    _nom;
-    _prenom;
-    _numero;
-    _mail;
-    _distance;
-    _paiementMethod;
 
     constructor() {
+        this._adresseDepart = null;
+        this._adresseArrivee  = null;
+        this._date  = null;
+        this._prix  = null;
+        this._nom = null ;
+        this._prenom = null ;
+        this._numero = null ;
+        this._mail = null ;
+        this._distance = null ;
+        this._paiementMethod = null ;
+
     }
 
     getAddresseDepart() {
