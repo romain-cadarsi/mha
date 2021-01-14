@@ -29,10 +29,10 @@ class Mail{
      */
     public function sendMHAMail(Commande $commande){
         date_default_timezone_set("UTC");
-        $dateFin = new \DateTime();
+        $dateFin = new \DateTime('now',new \DateTimeZone('UTC'));
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
-        $dateDebut = new \DateTime();
+        $dateDebut = new \DateTime('now',new \DateTimeZone('UTC'));
         date_timestamp_set($dateDebut,$commande->getDate()->getTimestamp());
         $dateDebutString =  date_format($dateDebut,"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
@@ -101,10 +101,10 @@ class Mail{
     public function mailPayeChauffeur($commande): string
     {
         date_default_timezone_set("UTC");
-        $dateFin = new \DateTime();
+        $dateFin = new \DateTime('now',new \DateTimeZone('UTC'));
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
-        $dateDebut = new \DateTime();
+        $dateDebut = new \DateTime('now',new \DateTimeZone('UTC'));
         date_timestamp_set($dateDebut,$commande->getDate()->getTimestamp());
         $dateDebutString =  date_format($dateDebut,"Ymd").'T'.date_format($commande->getDate(),"His")."Z";
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
