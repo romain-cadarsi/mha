@@ -38,7 +38,7 @@ class Mail{
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
-        $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
+        $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&ctz=Europe/Paris&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
 
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
@@ -110,7 +110,7 @@ class Mail{
         $dateFinString =  date_format($dateFin,"Ymd").'T'.date_format($dateFin,"His")."Z";
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
-        $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
+        $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&ctz=Europe/Paris&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
 
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
