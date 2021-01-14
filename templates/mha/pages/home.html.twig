@@ -45,6 +45,11 @@
                     <div class="card reservation">
                         <div class = "card-body">
                             <div class="row">
+
+                                <div class="col-lg-6 center pb20">
+                                    <h2> A quel heure ? </h2>
+                                    <div id="datetimepicker1"></div>
+                                </div>
                                 <div class="col-lg-6 pb20">
                                     <h2> Où ça ? </h2>
                                     <div class="row text-center">
@@ -66,10 +71,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6 center pb20">
-                                    <h2> A quel heure ? </h2>
-                                    <div id="datetimepicker1"></div>
                                 </div>
                                 <div class="col-lg-12 center">
                                     <div class="icon-box effect medium border center" style="width:100%">
@@ -383,18 +384,23 @@
         });
     });
     let date = new moment();
+
     $('#datetimepicker1').on('change.datetimepicker',function(e){
         date = e.date;
-        calculatePrice()
-        showReserver();
     })
     $('#destination-input').on('change',function () {
-        calculatePrice();
-        showReserver();
+
+        setTimeout(function (){
+            $('#datetimepicker1').on('change.datetimepicker',function(e){
+                calculatePrice();
+            })
+            calculatePrice();
+            showReserver();
+        },500)
+
     })
     $('#origin-input').on('change',function () {
-        calculatePrice();
-        showReserver();
+
     })
 
 
