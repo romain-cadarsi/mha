@@ -28,7 +28,7 @@ class Mail{
      * @throws \Twig\Error\SyntaxError
      */
     public function sendMHAMail(Commande $commande){
-        date_default_timezone_set("Europe/Paris");
+        date_default_timezone_set("UTC");
         $dateFin = new \DateTime();
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
@@ -100,7 +100,7 @@ class Mail{
      */
     public function mailPayeChauffeur($commande): string
     {
-        date_default_timezone_set("Europe/Paris");
+        date_default_timezone_set("UTC");
         $dateFin = new \DateTime();
         date_timestamp_set($dateFin,$commande->getDate()->getTimestamp());
         $dateFin->add(new DateInterval('PT20M'));
