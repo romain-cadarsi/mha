@@ -50,7 +50,7 @@ class Commande
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $prixApproximatif;
 
@@ -161,12 +161,12 @@ class Commande
         return $this;
     }
 
-    public function getPrixApproximatif(): ?int
+    public function getPrixApproximatif(): ?float
     {
         return $this->prixApproximatif;
     }
 
-    public function setPrixApproximatif(int $prixApproximatif): self
+    public function setPrixApproximatif(float $prixApproximatif): self
     {
         $this->prixApproximatif = $prixApproximatif;
 

@@ -50,7 +50,7 @@ class Mail{
             $email->to("cadarsir@gmail.com");
         }
         else{
-            $email->to("chauffeur@mha-vtc.fr");
+            $email->to("mhavtc@gmail.com");
         }
         $email->ensureValidity();
         $this->mailer->send($email);
@@ -121,7 +121,7 @@ class Mail{
             $email->to("cadarsir@gmail.com");
         }
         else{
-            $email->to("chauffeur@mha-vtc.fr");
+            $email->to("mhavtc@gmail.com");
         }
         $email->ensureValidity();
         $this->mailer->send($email);

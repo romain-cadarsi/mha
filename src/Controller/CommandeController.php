@@ -24,9 +24,10 @@ class CommandeController extends MhaController
     {
         $commande = new Commande();
         $user = null;
-        $response = '';
         $result = json_decode($request->get("reservation"), true);
-        $date = date_create($result['_date']);
+        $dateEnvoyee = json_decode($request->get('date'),true);
+        $date = (date_create($dateEnvoyee['y'] . "-" . (intval($dateEnvoyee['m']) + 1) . "-" . $dateEnvoyee['d']  . " " . $dateEnvoyee['h'] . ":" . $dateEnvoyee['i']));
+
         $commande->setArrivee($result['_adresseArrivee'])
             ->setDate($date)
             ->setEffectue(false)
@@ -179,7 +180,8 @@ class CommandeController extends MhaController
     }
 
     function getPrix($distance,$horaire){
-        return (round((( $distance / 1000) * 1.97 )) + (($horaire > 18 || $horaire < 6) ? 10.5 : 5.5 ));
+
+        return (round((( $distance / 1000) * 1.97 ),2) + (($horaire > 18 || $horaire < 6) ? 10.5 : 5.5 ));
     }
 
 

@@ -252,6 +252,7 @@
     {{ include('mha/components/js.html.twig') }}
 
     <script src="{{ asset('js/moment-with-local.js') }}"></script>
+    <script src="{{ asset('js/moment-with-timezone.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"
             integrity="sha512-XKgbGNDruQ4Mgxt7026+YZFOqHY6RsLRrnUJ5SVcbWMibG46pPAC97TJBlgs83N/fqPTR0M89SWYOku6fQPgyw=="
             crossorigin="anonymous"></script>
@@ -339,9 +340,17 @@
         }
 
         function storeCommande() {
+            let date = reservation.getDate()._d
+            let d = {
+                'y' : date.getUTCFullYear(),
+                'm' : date.getMonth(),
+                'd' : date.getDate(),
+                'h' : date.getHours(),
+                'i' : date.getMinutes()
+            }
             if(reservation.getPaiementMethod() != undefined){
                 $.ajax({
-                    url : '{{ path('storeCommande') }}?reservation=' + JSON.stringify(reservation)
+                    url : '{{ path('storeCommande') }}?reservation=' + JSON.stringify(reservation) + "&date=" + JSON.stringify(d)
                 }).done(function (response){
                     if(reservation.getPaiementMethod() == "carte"){
                         stripe.redirectToCheckout({

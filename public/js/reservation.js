@@ -39,7 +39,7 @@ class Reservation {
 
     setDate(value) {
         this._date = value;
-        $('#confirmationDate').html(this._date.format(" D/M à HH:mm"));
+        $('#confirmationDate').html(this._date.format("D/M à HH:mm"));
         if(this._distance){
             this.setPrix(this._distance,this._date)
         }
@@ -50,7 +50,7 @@ class Reservation {
     }
 
     setPrix(distance,date) {
-        this._prix = (Math.round((( distance / 1000) * 1.97 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.5 : 5.5 ))
+        this._prix = (((( distance / 1000) * 1.97 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.5 : 5.5 )).toFixed(2)
         $('#prix').html(this._prix);
     }
 
@@ -119,6 +119,7 @@ class Reservation {
 
 }
 moment().locale('fr');
+moment().tz("Europe/Paris").format();
 window['moment-range'].extendMoment(moment);
 let stepsVars = [
     [

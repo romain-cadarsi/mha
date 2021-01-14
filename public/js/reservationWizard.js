@@ -69,8 +69,16 @@ function verifyFieldsStep(step) {
 }
 
 function storeCommande() {
+    let date = reservation.getDate()._d
+    let d = {
+        'y' : date.getUTCFullYear(),
+        'm' : date.getMonth(),
+        'd' : date.getDate(),
+        'h' : date.getHours(),
+        'i' : date.getMinutes()
+    }
     $.ajax({
-        url : '/index.php/xhr/storeCommande?reservation=' + JSON.stringify(reservation)
+        url : '/index.php/xhr/storeCommande?reservation=' + JSON.stringify(reservation) + "&date=" + JSON.stringify(d)
     }).done(function (response){
         if (response){
             INSPIRO.elements.notification("Réservation envoyée",
