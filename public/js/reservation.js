@@ -41,7 +41,7 @@ class Reservation {
         this._date = value;
         $('#confirmationDate').html(this._date.format("D/M à HH:mm"));
         if(this._distance){
-            this.setPrix(this._distance,this._date)
+            this.setPrix(this._distance,value)
         }
     }
 
@@ -50,9 +50,18 @@ class Reservation {
     }
 
     setPrix(distance,date) {
-        this._prix = (((( distance / 1000) * 1.97 )) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.5 : 5.5 )).toFixed(2)
-        $('#prix').html(this._prix);
-    }
+            $('#prix').html('...')
+            $.ajax({
+                url : '/xhr/getPrix?infos='+ JSON.stringify({
+                    'from' :    this.getAddresseDepart(),
+                    'to' : this.getAdresseArrivee(),
+                    'h' :  date._d.getHours()
+                }),
+            }).done(function (data){
+                this._prix = JSON.parse(data)['prix']
+                $('#prix').html(this._prix);
+            })
+        }
 
     getNom() {
         return this._nom;
@@ -98,7 +107,7 @@ class Reservation {
     setDistance(value) {
         this._distance = value;
         if (this._date){
-            this.setPrix(this._distance,this._date)
+            this.setPrix(value,this._date)
         }
     }
 

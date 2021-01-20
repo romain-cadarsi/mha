@@ -23,8 +23,10 @@
                 <div id="presentation-text" class="slide-captions text-center text-light">
                     <!-- Captions -->
                     <h1>M.H.A Transport VTC</h1>
-                    <p> Nous sommes soucieux de votre confort. </p>
+                    <p> Si vous êtes soucieux de votre confort, du prix et de votre sécurité, n'hésitez plus.</p>
+                    <p>Confort immédiat Garanti !</p>
                     <div><a href="{{ path('reservation') }}" class="btn scroll-to">Reserver un trajet</a></div>
+                    <p>Ou appellez nous :<br><b><a href="tel:07-49-55-03-12"> 07 49 55 03 12 </a> </b></p>
                     <!-- end: Captions -->
                 </div>
             </div>
@@ -37,8 +39,8 @@
         <div class="container">
             <div class="heading-text text-center heading-section">
                 <h2> Estimer un trajet </h2>
-                <h4 style="font-size: 22px;"> Un trajet à faire dans Toulouse et son agglomération ? </h4>
-                <h4 class="pb20" style="font-size: 22px;"> Estimez le prix de votre course rapidement et en toute sécurité avec MHA-vtc !</h4>
+                <h4 style="font-size: 22px;">
+                    Désirez-vous connaitre le prix d'un trajet dans Toulouse et son agglomération ?</h4>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -257,7 +259,10 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <a class="btn" href="mailto:chauffeur@mha-vtc.fr"> Envoyez nous un mail !</a>
+                    <a class="btn" href="tel:07-49-55-03-12" onclick="function f() {
+                      INSPIRO.elements.notification('Notre numéro de téléphone : ' , '📱 07 49 55 03 12','success')}; f()"> <i class="fa fa-phone"></i></a>
                 </div>
+
             </div>
         </div>
     </section>
@@ -395,7 +400,7 @@
                 calculatePrice();
             })
             calculatePrice();
-            showReserver();
+
         },500)
 
     })
@@ -403,9 +408,20 @@
 
     })
 
-
+    let prixDonne ;
     function calculatePrice(){
-        $('#prixTrajet').html((  parseFloat(((( distance / 1000) * 1.97 )).toFixed(2)) + ((date._d.getHours() > 18 || date._d.getHours() < 6) ? 10.50 : 5.50 )))
+        $('#prixTrajet').html('...')
+        $.ajax({
+            url : '{{ path('getPrix') }}?infos='+ JSON.stringify({
+                'from' : $('#origin-input').val(),
+                'to' : $('#destination-input').val(),
+                'h' :  date._d.getHours()
+            }),
+        }).done(function (data){
+            $('#prixTrajet').html(JSON.parse(data)['prix']);
+            showReserver()
+
+        })
     }
 
     $('.reserverMaintenant').on('click',function(){

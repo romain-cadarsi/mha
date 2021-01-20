@@ -158,6 +158,17 @@ class CommandeController extends MhaController
 
     }
 
+    /**
+     * @Route("/xhr/getPrix" , name="getPrix", methods = "GET")
+     */
+    public function getPrixXHR(Request $request)
+    {
+        $infos = json_decode($request->get('infos'),true);
+        return new Response(json_encode(['prix' =>$this->getPrix($this->getDistance($infos['from'],$infos['to']),$infos['h'])]));
+    }
+
+
+
     function getDistance($from,$to){
         // Google API key
         $apiKey = 'AIzaSyBT7jEnTsN1qsD6et-UlFFtugaGXomXdDc';
