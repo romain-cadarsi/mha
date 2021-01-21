@@ -26,6 +26,7 @@ $('#btnAujourdhui').click(function () {
     $('#when').addClass('toHideOnMobile');
     $('#retour').addClass('visiblePhone');
     $('#prixPrevu').removeClass('hidden');
+    reservation.setDate( $('#datetimepicker1').data("datetimepicker")._dates[0])
 })
 
 $('#btnPlusTard').click(function () {

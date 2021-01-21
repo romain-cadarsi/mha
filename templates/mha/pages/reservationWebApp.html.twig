@@ -306,7 +306,7 @@
         function verify(step) {
             switch (step){
                 case 1 :
-                    return (reservation._date !== undefined)
+                    return (reservation._date !== undefined && reservation._date !== null)
                 case 2 :
                     if(verifyFieldsStep(step)){
                         reservation.fillConfirmation()

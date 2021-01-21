@@ -140,6 +140,9 @@
     #map {
         height: calc(100vh - 450px);
     }
+    #wizard3{
+        min-height: 80vh;
+    }
 
     #prixPrevu {
         position: fixed;
