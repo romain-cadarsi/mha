@@ -52,7 +52,7 @@ class Reservation {
     setPrix(distance,date) {
             $('#prix').html('...')
             $.ajax({
-                url : 'index.php/xhr/getPrix?infos='+ JSON.stringify({
+                url : '/index.php/xhr/getPrix?infos='+ JSON.stringify({
                     'from' :    this.getAddresseDepart(),
                     'to' : this.getAdresseArrivee(),
                     'h' :  date._d.getHours()
