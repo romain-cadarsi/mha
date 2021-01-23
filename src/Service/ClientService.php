@@ -13,9 +13,9 @@ class ClientService {
     }
 
     public function findIfExists($mail){
-        $user = $this->clientRepo->findBy(['mail' => $mail]);
+        $user = $this->clientRepo->findOneBy(['mail' => $mail]);
         if($user){
-            return true;
+            return $user;
         }
         return false;
     }

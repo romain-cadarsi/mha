@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\Commande;
 use App\Entity\Paiement;
+use App\Entity\User;
 use App\Repository\CommandeRepository;
 use App\Service\ClientService;
 use App\Service\Mail;
@@ -137,22 +138,22 @@ class CommandeController extends MhaController
     public function clientStored(Request $request, ClientService $clientService)
     {
         $mail = $request->get('mail');
-        if ($clientService->findIfExists($mail)) {
+        $user = $clientService->findIfExists($mail);
+        if ($user) {
             return new Response('
                                 <div class="h5 mb-4 text-center"
                                  style="font-size: 1.6em;font-weight: 500;line-height: 1.5em;letter-spacing: -0.79px;">
-                                On se connait ?
+                               Bienvenu, ' .  $user->getName() .  '
                             </div>
-                            <p>Il semble que vous déjà effectué un trajet avec mha-vtc, nous ajouterons les points de
-                                cette course sur votre compte.</p>');
+                            <p>
+Il semble que vous avez déjà effectué un trajet avec MHA vtc, nous vous remercions pour votre fidélité et avons hâte de vous revoir.</p>');
         } else {
             return new Response('
                                 <div class="h5 mb-4 text-center"
                                  style="font-size: 1.6em;font-weight: 500;line-height: 1.5em;letter-spacing: -0.79px;">
-                                Vous avez l\'air nouveau, Bienvenue !
+                                Bienvenu 
                             </div>
-                            <p>Les points liés à votre commande seront automatiquement liés à votre adresse mail, vous pourrez les utiliser bientôt pour avoir 
-                            des avantages !</p>');
+                            <p>Il semble que c\'est votre première course avec MHA vtc, nous avons hâte de vous rencontrer. </p>');
         }
 
 
