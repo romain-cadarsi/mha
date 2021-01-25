@@ -143,7 +143,7 @@ class CommandeController extends MhaController
             return new Response('
                                 <div class="h5 mb-4 text-center"
                                  style="font-size: 1.6em;font-weight: 500;line-height: 1.5em;letter-spacing: -0.79px;">
-                               Bienvenu, ' .  $user->getName() .  '
+                               Bienvenue, ' .  $user->getName() .  '
                             </div>
                             <p>
 Il semble que vous avez déjà effectué un trajet avec MHA vtc, nous vous remercions pour votre fidélité et avons hâte de vous revoir.</p>');
@@ -151,7 +151,7 @@ Il semble que vous avez déjà effectué un trajet avec MHA vtc, nous vous remer
             return new Response('
                                 <div class="h5 mb-4 text-center"
                                  style="font-size: 1.6em;font-weight: 500;line-height: 1.5em;letter-spacing: -0.79px;">
-                                Bienvenu 
+                                Bienvenue 
                             </div>
                             <p>Il semble que c\'est votre première course avec MHA vtc, nous avons hâte de vous rencontrer. </p>');
         }
