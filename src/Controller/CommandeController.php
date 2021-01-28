@@ -11,6 +11,7 @@ use App\Service\ClientService;
 use App\Service\Mail;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Stripe;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +71,8 @@ class CommandeController extends MhaController
                 'cancel_url' =>  $this->generateUrl('reservationAnnulee',[],UrlGeneratorInterface::ABSOLUTE_URL),
             ];
 
-            Stripe::setApiKey('sk_test_51Hyj67C4cFJem7nUwzkizEhPKPFQcqiCNQPSbChR6XqHqTjeB8UWofSeoZuxCVWIJGIsHSIBugeZYrgCpx36C7d800nbFOrDcV');
+
+            Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
             array_push($options['line_items'],
                 [
