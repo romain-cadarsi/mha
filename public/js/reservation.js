@@ -128,8 +128,7 @@ class Reservation {
 
 }
 moment().locale('fr');
-moment().tz("Europe/Paris").format();
-window['moment-range'].extendMoment(moment);
+
 let stepsVars = [
     [
         '#origin-input',

@@ -28,7 +28,6 @@ class MhaController extends AbstractController
     public function index()
     {
         return $this->render('mha/pages/home.html.twig', [
-            'controller_name' => 'MhaController',
         ]);
     }
 

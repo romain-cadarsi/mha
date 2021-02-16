@@ -13,7 +13,7 @@
 {% block body %}
     <body>
 
-    <div id="reservationCard" style="background-image: url('https://cadarsir.fr/excelium/5ec78f4653946.png');">
+    <div id="reservationCard" style="background-image: url('{{ asset('images/5ec78f4653946.png.webp') }}');">
         <div class="card principal">
             <div class="card-body">
                 <a href="{{ path('index') }}" style="height: 90px;display: block;width: 90px;position: absolute;right: 30px;z-index: 1000;"><img src="{{ asset('images/logoNoir.png.webp') }}" style="width: 90px;height: auto;/*! text-shadow: 2px 2px 4px #d22222; *//*! -webkit-filter: drop-shadow(0px 0px 20px rgba(0,0,0,1)); *//*! filter: url(#drop-shadow); */-ms-filter: &quot;progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')&quot;;filter: &quot;progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')&quot;;"> </a>
@@ -249,183 +249,174 @@
         </div>
     </div>
 
-    {{ include('mha/components/js.html.twig') }}
+    {% block javascript %}
 
-    <script src="{{ asset('js/moment-with-local.js') }}"></script>
-    <script src="{{ asset('js/moment-with-timezone.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"
-            integrity="sha512-XKgbGNDruQ4Mgxt7026+YZFOqHY6RsLRrnUJ5SVcbWMibG46pPAC97TJBlgs83N/fqPTR0M89SWYOku6fQPgyw=="
-            crossorigin="anonymous"></script>
-    <script src="{{ asset('js/reservation.js') }}"></script>
+        {% include('mha/components/js.html.twig') %}
+        {% include('mha/components/jsMaps.html.twig') %}
+        {% include('mha/components/jsStripe.html.twig') %}
+        <script src="{{ asset('js/reservation.js') }}" defer></script>
+        <script src="{{ asset('js/validate.min.js') }}"></script>
+        <script src="{{ asset('js/validate-rules.js') }}"></script>
+        <link href="{{ asset('js/jquery.steps.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
+        <script defer src="{{ asset('js/time.js') }}"></script>
 
-    <script>
-    </script>
-    <script src="{{ asset('js/tempusdominus-bootstrap-4.js') }}"></script>
-    <script src="{{ asset('js/validate.min.js') }}"></script>
-    <script src="{{ asset('js/validate-rules.js') }}"></script>
-    <link href="{{ asset('js/jquery.steps.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
-    <script src="{{ asset('js/modernify.js') }}"></script>
-    <script src="{{ asset('js/map.js') }}"></script>
-    <script defer src="{{ asset('js/time.js') }}"></script>
-
-    <script defer>
-
-
-        $('#wizard3').steps({
-            headerTag: 'h2',
-            bodyTag: '.wizard-content',
-            autoFocus: true,
-            enableAllSteps: true,
-            labels: {
-                cancel: "Annuler",
-                current: "Etape actuelle:",
-                finish: '<a href="#finish" class="btn terminer" role="menuitem">Terminer</a>',
-                loading: "Chargement ...",
-                next: '<a href="#next" class="btn btn-outline" role="menuitem">Suivant</a>',
-                pagination: "Pagination",
-                previous: '<a href="#previous" class="btn btn-light" role="menuitem">Précedent</a>',
-            },
-            titleTemplate: '<span class="number">#index#</span><span class="title">#title#</span>',
-            onStepChanging: function (event, currentIndex, priorIndex) {
-                return verify(currentIndex)
-            },
-            onFinished: function (event, currentIndex) {
-                if(!$('#terms').prop('checked')){
-                    INSPIRO.elements.notification("Veuillez cocher la case",
-                        "Vous n'avez pas accepté les conditions générales de ventes", "warning");
-                }
-                else{
-                    storeCommande();
-                }
-
-            }
-        });
-
-
-        function verify(step) {
-            switch (step){
-                case 1 :
-                    return (reservation._date !== undefined && reservation._date !== null)
-                case 2 :
-                    if(verifyFieldsStep(step)){
-                        reservation.fillConfirmation()
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                default:
-                    return verifyFieldsStep(step)
-            }
-
-
-        }
-
-        function verifyFieldsStep(step) {
-            let valid = true;
-            let i = 0;
-            $(stepsVars[step]).each(function () {
-                if ($(stepsVars[step][i]).val() === "") {
-                    valid = false;
-                }
-                i++;
-            })
-            if (step === 0) {
-                if(!reservation._adresseDepart || !reservation._adresseArrivee || !reservation._distance){
-                    valid = false;
-                }
-            }
-            return valid;
-        }
-
-        function storeCommande() {
-            let date = reservation.getDate()._d
-            let d = {
-                'y' : date.getUTCFullYear(),
-                'm' : date.getMonth(),
-                'd' : date.getDate(),
-                'h' : date.getHours(),
-                'i' : date.getMinutes()
-            }
-            if(reservation.getPaiementMethod() != undefined){
-                $.ajax({
-                    url : '{{ path('storeCommande') }}?reservation=' + JSON.stringify(reservation) + "&date=" + JSON.stringify(d)
-                }).done(function (response){
-                    if(reservation.getPaiementMethod() == "carte"){
-                        stripe.redirectToCheckout({
-                            sessionId:  JSON.parse(response).id
-                        })
+        <script defer>
+            $('#wizard3').steps({
+                headerTag: 'h2',
+                bodyTag: '.wizard-content',
+                autoFocus: true,
+                enableAllSteps: true,
+                labels: {
+                    cancel: "Annuler",
+                    current: "Etape actuelle:",
+                    finish: '<a href="#finish" class="btn terminer" role="menuitem">Terminer</a>',
+                    loading: "Chargement ...",
+                    next: '<a href="#next" class="btn btn-outline" role="menuitem">Suivant</a>',
+                    pagination: "Pagination",
+                    previous: '<a href="#previous" class="btn btn-light" role="menuitem">Précedent</a>',
+                },
+                titleTemplate: '<span class="number">#index#</span><span class="title">#title#</span>',
+                onStepChanging: function (event, currentIndex, priorIndex) {
+                    return verify(currentIndex)
+                },
+                onFinished: function (event, currentIndex) {
+                    if(!$('#terms').prop('checked')){
+                        INSPIRO.elements.notification("Veuillez cocher la case",
+                            "Vous n'avez pas accepté les conditions générales de ventes", "warning");
                     }
                     else{
-                        window.location = response
+                        storeCommande();
                     }
+
+                }
+            });
+
+
+            function verify(step) {
+                switch (step){
+                    case 1 :
+                        return (reservation._date !== undefined && reservation._date !== null)
+                    case 2 :
+                        if(verifyFieldsStep(step)){
+                            reservation.fillConfirmation()
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    default:
+                        return verifyFieldsStep(step)
+                }
+
+
+            }
+
+            function verifyFieldsStep(step) {
+                let valid = true;
+                let i = 0;
+                $(stepsVars[step]).each(function () {
+                    if ($(stepsVars[step][i]).val() === "") {
+                        valid = false;
+                    }
+                    i++;
                 })
+                if (step === 0) {
+                    if(!reservation._adresseDepart || !reservation._adresseArrivee || !reservation._distance){
+                        valid = false;
+                    }
+                }
+                return valid;
+            }
 
+            function storeCommande() {
+                let date = reservation.getDate()._d
+                let d = {
+                    'y' : date.getUTCFullYear(),
+                    'm' : date.getMonth(),
+                    'd' : date.getDate(),
+                    'h' : date.getHours(),
+                    'i' : date.getMinutes()
+                }
+                if(reservation.getPaiementMethod() != undefined){
+                    $.ajax({
+                        url : '{{ path('storeCommande') }}?reservation=' + JSON.stringify(reservation) + "&date=" + JSON.stringify(d)
+                    }).done(function (response){
+                        if(reservation.getPaiementMethod() == "carte"){
+                            stripe.redirectToCheckout({
+                                sessionId:  JSON.parse(response).id
+                            })
+                        }
+                        else{
+                            window.location = response
+                        }
+                    })
+
+
+                }
+                else{
+                    INSPIRO.elements.notification('Choisissez un mode de paiement','','danger')
+                }
 
             }
-            else{
-                INSPIRO.elements.notification('Choisissez un mode de paiement','','danger')
+
+            $('#email').on("focusout",function (){
+                $.ajax({
+                    url: "{{ path('clientStored') }}?mail=" + $('#email').val(),
+                }).done(function (data){
+                    $('#clientRecognized').html(data);
+                })
+            })
+
+            $('#carte').on("click",function (){
+                $('.terminer').html('Payer');
+                reservation.setPaiementMethod('carte')
+            })
+
+            $('#espece').on("click",function (){
+                $('.terminer').html('Terminer');
+                reservation.setPaiementMethod('espece')
+            })
+
+        </script>
+        <script defer>
+            function getParameterByName(name) {
+                name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')
+                let regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+                    results = regex.exec(location.search)
+                return results == null
+                    ? ''
+                    : decodeURIComponent(results[1].replace(/\+/g, ' '))
             }
 
-        }
 
-        $('#email').on("focusout",function (){
-            $.ajax({
-                url: "{{ path('clientStored') }}?mail=" + $('#email').val(),
-            }).done(function (data){
-                $('#clientRecognized').html(data);
-            })
-        })
+            if (getParameterByName('estimated') === 'y'){
+                $('body').on('reservationCreated',function (){
+                    $('#origin-input').val(getParameterByName('oi'))
+                    reservation.setAddresseDepart(getParameterByName('oi'))
+                    $('#destination-input').val(getParameterByName('di'))
+                    reservation.setAdresseArrivee(getParameterByName('di'))
+                    reservation.setDistance(getParameterByName('distance'))
+                    $('#wizard3').steps('next')
+                    INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
+                })
+            }
 
-        $('#carte').on("click",function (){
-            $('.terminer').html('Payer');
-            reservation.setPaiementMethod('carte')
-        })
-
-        $('#espece').on("click",function (){
-            $('.terminer').html('Terminer');
-            reservation.setPaiementMethod('espece')
-        })
-
-    </script>
-    <script defer>
-        function getParameterByName(name) {
-            name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')
-            let regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-                results = regex.exec(location.search)
-            return results == null
-                ? ''
-                : decodeURIComponent(results[1].replace(/\+/g, ' '))
-        }
+            if (getParameterByName('estimated') === 'dev'){
+                $('body').on('reservationCreated',function (){
+                    $('#origin-input').val(getParameterByName('oi'))
+                    reservation.setAddresseDepart(getParameterByName('oi'))
+                    $('#destination-input').val(getParameterByName('di'))
+                    reservation.setAdresseArrivee(getParameterByName('di'))
+                    reservation.setDistance(getParameterByName('distance'))
+                    $('#wizard3').steps('next')
+                    INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
+                })
+            }
 
 
-        if (getParameterByName('estimated') === 'y'){
-            $('body').on('reservationCreated',function (){
-                $('#origin-input').val(getParameterByName('oi'))
-                reservation.setAddresseDepart(getParameterByName('oi'))
-                $('#destination-input').val(getParameterByName('di'))
-                reservation.setAdresseArrivee(getParameterByName('di'))
-                reservation.setDistance(getParameterByName('distance'))
-                $('#wizard3').steps('next')
-                INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
-            })
-        }
-
-        if (getParameterByName('estimated') === 'dev'){
-            $('body').on('reservationCreated',function (){
-                $('#origin-input').val(getParameterByName('oi'))
-                reservation.setAddresseDepart(getParameterByName('oi'))
-                $('#destination-input').val(getParameterByName('di'))
-                reservation.setAdresseArrivee(getParameterByName('di'))
-                reservation.setDistance(getParameterByName('distance'))
-                $('#wizard3').steps('next')
-                INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
-            })
-        }
-
-
-    </script>
+        </script>
+    {% endblock %}
 
 
     </body>

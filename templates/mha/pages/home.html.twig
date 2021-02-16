@@ -34,15 +34,29 @@
     </div>
     <!--end: Inspiro Slider -->
     <!-- WELCOME -->
-    <section id="reserver"  style="padding: 150px 0;">
+    <section id="contact2" class="pb-0" data-animate="fadeInUp" data-animate-delay="0">
         <div class="container">
             <div class="heading-text text-center heading-section">
-                <p>Pour toute question, appelez nous au <br><b><a href="tel:07-49-55-03-12"> 07 49 55 03 12 </a> </b></p>
+                <h2> Confort immédiat garanti ! </h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a class="btn" href="{{path('reservation')}}"> Réserver en ligne </a>
+                    <a class="btn btn-success" href="tel:07-49-55-03-12" onclick="function f() {
+                      INSPIRO.elements.notification('Notre numéro de téléphone : ' , '📱 07 49 55 03 12','success')}; f()"> <i class="fa fa-phone"></i> Réserver par téléphone</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section id="reserver">
+        <div class="container" data-animate="fadeInUp" data-animate-delay="0">
+            <div class="heading-text text-center heading-section">
                 <h2> Estimer un trajet </h2>
                 <h4 style="font-size: 22px;">
                     Désirez-vous connaitre le prix d'un trajet dans Toulouse et son agglomération ?</h4>
             </div>
-            <div class="row">
+            <div class="row" data-animate="fadeInUp" data-animate-delay="0">
                 <div class="col-lg-12 text-center">
                     <div class="card reservation">
                         <div class = "card-body">
@@ -93,14 +107,14 @@
     <!-- PORTFOLIO -->
     <section class="p-b-0">
         <div class="container" style="padding-bottom: 30px;">
-            <div class="heading-text heading-section">
+            <div class="heading-text heading-section" data-animate="fadeInUp" data-animate-delay="0">
                 <h2>Pour tous vos trajets à Toulouse.</h2>
                 <span class="lead">Nous prennons en charge tous vos déplacements dans Toulouse et son agglomération. Cela comprends les trajets
                 reliant les points importants de la ville tels que l'aéroport ou la gare, mais également les trajets quotidiens en tout genre, vous pouvez
                 compter sur nous.</span>
             </div>
         </div>
-        <div class="portfolio">
+        <div class="portfolio" data-animate="fadeInUp" data-animate-delay="0">
             <!-- Portfolio Items -->
             <div id="portfolio" class="grid-layout portfolio-4-columns" data-margin="0">
                 <!-- portfolio item -->
@@ -171,11 +185,11 @@
     <!-- WHAT WE DO -->
     <section class="background-grey" id="Apropos">
         <div class="container">
-            <div class="heading-text heading-section">
+            <div class="heading-text heading-section" data-animate="fadeInUp" data-animate-delay="0">
                 <h2>Qui sommes nous ? </h2>
                 <span class="lead">À propos de M.H.A Transport</span>
             </div>
-            <div class="row">
+            <div class="row" data-animate="fadeInUp" data-animate-delay="0">
                 <div class="col-lg-4">
                     <div data-animate="fadeInUp" data-animate-delay="0">
                         <div class="icon-box effect medium border center" style="width:100%">
@@ -230,7 +244,7 @@
     <section class="text-light p-t-150 p-b-150 " data-bg-parallax="{{ asset('/images/5ec78bc256220.png.webp') }}">
         <div class="bg-overlay"></div>
         <div class="container">
-            <div class="row">
+            <div class="row" data-animate="fadeInUp" data-animate-delay="0">
                 <div class="col-lg-6">
                     <div class="text-center">
                         <div class="icon"><i class="fa fa-3x fa-road"></i></div>
@@ -251,7 +265,7 @@
         </div>
     </section>
     <!-- end: COUNTERS -->
-    <section id="contact" style="padding: 100px 0;">
+    <section id="contact" style="padding: 100px 0;" data-animate="fadeInUp" data-animate-delay="0">
         <div class="container">
             <div class="heading-text text-center heading-section">
                 <h2> Contactez nous </h2>
@@ -281,157 +295,146 @@
 
 {% endblock %}
 {% block javascript %}
-    <script src="https://cadarsir.fr/m14intelligence/Template/plugins/moment/moment-with-local.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"
-            integrity="sha512-XKgbGNDruQ4Mgxt7026+YZFOqHY6RsLRrnUJ5SVcbWMibG46pPAC97TJBlgs83N/fqPTR0M89SWYOku6fQPgyw=="
-            crossorigin="anonymous"></script>
-    <script src="https://cadarsir.fr/m14intelligence/Template/plugins/bootstrap-datetimepicker/tempusdominus-bootstrap-4.js"></script>
-    <script src="{{ asset('js/reservation.js') }}"></script>
-    <script>
+    {{ parent() }}
+    {% include('mha/components/jsMaps.html.twig') %}
+    <script src="{{ asset('js/reservation.js') }}" defer></script>
+    <script defer>
+        "use strict";
         let distance = 0;
-    </script>
-    <script>
-    "use strict";
-    function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-    mapTypeControl: false,
-    center: {lat: 43.6115554, lng: 1.4263502},
-    zoom: 13,
-    fullscreenControl: false,
-    streetViewControl: true
-});
 
 
-    new AutocompleteDirectionsHandler(map);
-}
+        function initMap() {
+//     var map = new google.maps.Map(document.getElementById('map'), {
+//     mapTypeControl: false,
+//     center: {lat: 43.6115554, lng: 1.4263502},
+//     zoom: 13,
+//     fullscreenControl: false,
+//     streetViewControl: false
+// });
 
-    /**
-    * @constructor
-    */
-    function AutocompleteDirectionsHandler(map) {
-    this.map = map;
-    this.originPlaceId = null;
-    this.destinationPlaceId = null;
-    this.travelMode = 'DRIVING';
-    this.directionsService = new google.maps.DirectionsService;
-    this.directionsRenderer = new google.maps.DirectionsRenderer;
-    this.directionsRenderer.setMap(map);
+            new AutocompleteDirectionsHandler();
+        }
 
-    var originInput = document.getElementById('origin-input');
-    var destinationInput = document.getElementById('destination-input');
+        /**
+         * @constructor
+         */
+        function AutocompleteDirectionsHandler() {
+            // this.map = map;
+            this.originPlaceId = null;
+            this.destinationPlaceId = null;
+            this.travelMode = 'DRIVING';
+            this.directionsService = new google.maps.DirectionsService;
+            this.directionsRenderer = new google.maps.DirectionsRenderer;
 
-    var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+            var originInput = document.getElementById('origin-input');
+            var destinationInput = document.getElementById('destination-input');
+
+            var originAutocomplete = new google.maps.places.Autocomplete(originInput);
 // Specify just the place data fields that you need.
-    originAutocomplete.setFields(['place_id']);
+            originAutocomplete.setFields(['place_id']);
 
-    var destinationAutocomplete =
-    new google.maps.places.Autocomplete(destinationInput);
+            var destinationAutocomplete =
+                new google.maps.places.Autocomplete(destinationInput);
 // Specify just the place data fields that you need.
-    destinationAutocomplete.setFields(['place_id']);
+            destinationAutocomplete.setFields(['place_id']);
 
-    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-}
+            this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+            this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+        }
 
 
 
-    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
-    autocomplete, mode) {
-    var me = this;
-    autocomplete.bindTo('bounds', this.map);
+        AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
+            autocomplete, mode) {
+            var me = this;
+//     autocomplete.bindTo('bounds', this.map);
+//
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
 
-    autocomplete.addListener('place_changed', function () {
-    var place = autocomplete.getPlace();
+                if (!place.place_id) {
+                    window.alert('Veuillez selectionner une adresse dans la liste déroulante');
+                    return;
+                }
+                if (mode === 'ORIG') {
+                    me.originPlaceId = place.place_id;
+                } else {
+                    me.destinationPlaceId = place.place_id;
+                }
+            });
+        };
 
-    if (!place.place_id) {
-    window.alert('Veuillez selectionner une adresse dans la liste déroulante');
-    return;
-}
-    if (mode === 'ORIG') {
-    me.originPlaceId = place.place_id;
-} else {
-    me.destinationPlaceId = place.place_id;
-}
-    me.route();
+        AutocompleteDirectionsHandler.prototype.route = function () {
+            if (!this.originPlaceId || !this.destinationPlaceId) {
+                return;
+            }
 
-});
-};
+            this.directionsService.route(
+                {
+                    origin: {'placeId': this.originPlaceId},
+                    destination: {'placeId': this.destinationPlaceId},
+                    travelMode: this.travelMode
+                },
+                function (response, status) {
+                    if (status === 'OK') {
+                        distance = response.routes[0].legs[0].distance.value;
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+        };
 
-    AutocompleteDirectionsHandler.prototype.route = function () {
-    if (!this.originPlaceId || !this.destinationPlaceId) {
-    return;
-}
-    var me = this;
 
-    this.directionsService.route(
-{
-    origin: {'placeId': this.originPlaceId},
-    destination: {'placeId': this.destinationPlaceId},
-    travelMode: this.travelMode
-},
-    function (response, status) {
-    if (status === 'OK') {
-    distance = response.routes[0].legs[0].distance.value;
-    me.directionsRenderer.setDirections(response);
-} else {
-    window.alert('Directions request failed due to ' + status);
-}
-});
-};
 
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-            inline: true,
-            sideBySide: true,
-            format: 'LT',
-            stepping: 20,
-            maxDate: moment({h: 24})
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                format: 'LT',
+                stepping: 20,
+                maxDate: moment({h: 24})
+            });
         });
-    });
-    let date = new moment();
+        let date = new moment();
 
-    $('#datetimepicker1').on('change.datetimepicker',function(e){
-        date = e.date;
-    })
-    $('#destination-input').on('change',function () {
+        $('#datetimepicker1').on('change.datetimepicker',function(e){
+            date = e.date;
+        })
+        $('#destination-input').on('change',function () {
 
-        setTimeout(function (){
-            $('#datetimepicker1').on('change.datetimepicker',function(e){
+            setTimeout(function (){
+                $('#datetimepicker1').on('change.datetimepicker',function(e){
+                    calculatePrice();
+                })
                 calculatePrice();
-            })
-            calculatePrice();
 
-        },500)
-
-    })
-    $('#origin-input').on('change',function () {
-
-    })
-
-    let prixDonne ;
-    function calculatePrice(){
-        $('#prixTrajet').html('...')
-        $.ajax({
-            url : '{{ path('getPrix') }}?infos='+ JSON.stringify({
-                'from' : $('#origin-input').val(),
-                'to' : $('#destination-input').val(),
-                'h' :  date._d.getHours()
-            }),
-        }).done(function (data){
-            $('#prixTrajet').html(JSON.parse(data)['prix']);
-            showReserver()
+            },500)
 
         })
-    }
 
-    $('.reserverMaintenant').on('click',function(){
-        window.location = "{{ path('reservation') }}?estimated=y&oi="+$('#origin-input').val()+"&di="+ $('#destination-input').val()+"&distance="+distance
-    })
-    function showReserver(){
-        if($('#origin-input').val() && $('#destination-input').val()){
-            $('.reserverMaintenant').removeClass('hidden');
+        function calculatePrice(){
+            $('#prixTrajet').html('...')
+            $.ajax({
+                url : '{{ path('getPrix') }}?infos='+ JSON.stringify({
+                    'from' : $('#origin-input').val(),
+                    'to' : $('#destination-input').val(),
+                    'h' :  date._d.getHours()
+                }),
+            }).done(function (data){
+                $('#prixTrajet').html(JSON.parse(data)['prix']);
+                showReserver()
+
+            })
         }
-    }
 
-</script>
+        $('.reserverMaintenant').on('click',function(){
+            window.location = "{{ path('reservation') }}?estimated=y&oi="+$('#origin-input').val()+"&di="+ $('#destination-input').val()+"&distance="+distance
+        })
+        function showReserver(){
+            if($('#origin-input').val() && $('#destination-input').val()){
+                $('.reserverMaintenant').removeClass('hidden');
+            }
+        }
+
+    </script>
 {% endblock %}
