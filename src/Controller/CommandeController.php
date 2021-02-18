@@ -194,7 +194,7 @@ Il semble que vous avez déjà effectué un trajet avec MHA vtc, nous vous remer
     }
 
     function getPrix($distance,$horaire){
-        return (round((( $distance / 1000) * 1.97 ),2,PHP_ROUND_HALF_DOWN) + (($horaire > 18 || $horaire < 6) ? 10.5 : 5.5 ));
+        return (round((( $distance / 1000) * 1.97 ),2,PHP_ROUND_HALF_DOWN) + ((($horaire > 18 || $horaire < 6) ? 10.5 : 5.5 ) / 2));
     }
 
 
