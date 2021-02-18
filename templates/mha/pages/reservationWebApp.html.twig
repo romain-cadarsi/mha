@@ -250,7 +250,7 @@
     </div>
 
     {% block javascript %}
-
+        {{ parent() }}
         {% include('mha/components/js.html.twig') %}
         {% include('mha/components/jsMaps.html.twig') %}
         {% include('mha/components/jsStripe.html.twig') %}
@@ -260,6 +260,7 @@
         <link href="{{ asset('js/jquery.steps.css') }}" rel="stylesheet">
         <script src="{{ asset('js/jquery.steps.min.js') }}"></script>
         <script defer src="{{ asset('js/time.js') }}"></script>
+        <script src="{{ asset('js/map.js') }}"></script>
 
         <script defer>
             $('#wizard3').steps({
@@ -413,7 +414,6 @@
                     INSPIRO.elements.notification("Réservation récupérée","Vous pouvez entrer vos informations pour réserver votre estimation.",'success')
                 })
             }
-
 
         </script>
     {% endblock %}
