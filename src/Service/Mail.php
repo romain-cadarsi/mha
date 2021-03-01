@@ -39,7 +39,7 @@ class Mail{
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
         $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&ctz=Europe/Paris&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
-
+        date_default_timezone_set("Europe/Paris");
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
             ->subject("Nouvelle commande de " . $commande->getNomPrenom())
@@ -111,7 +111,7 @@ class Mail{
         $aller = str_replace(' ','+',$commande->getDepart());
         $arrivee = str_replace(' ','+',$commande->getArrivee());
         $lien = "https://www.google.com/calendar/render?action=TEMPLATE&text=Commande+MHA-VTC&dates=$dateDebutString/$dateFinString&ctz=Europe/Paris&sf=true&output=xml&details=Depart+:+$aller+/Arrivee+:+$arrivee";
-
+        date_default_timezone_set("Europe/Paris");
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
             ->subject("Nouvelle réservation Payée de " . $commande->getNomPrenom())
@@ -137,7 +137,7 @@ class Mail{
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function mailPayeClient(Commande $commande){
-
+        date_default_timezone_set("Europe/Paris");
         $email = (new Email())
             ->from('reservation@mha-vtc.fr')
             ->to($commande->getEmail())
