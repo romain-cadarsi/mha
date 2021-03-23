@@ -7,11 +7,14 @@ use App\Entity\Commande;
 use App\Entity\Paiement;
 use App\Entity\User;
 use App\Repository\CommandeRepository;
+use App\Repository\PromotionnalCodeRepository;
 use App\Service\ClientService;
 use App\Service\Mail;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Stripe;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,13 +25,15 @@ class CommandeController extends MhaController
     /**
      * @Route("/xhr/storeCommande", name="storeCommande")
      */
-    public function storeCommande(Request $request, EntityManagerInterface $entityManager, ClientService $clientService, Mail $mailService)
+    public function storeCommande(Request $request, EntityManagerInterface $entityManager, ClientService $clientService, Mail $mailService,PromotionnalCodeRepository $promotionnalCodeRepository)
     {
         $commande = new Commande();
         $user = null;
         $result = json_decode($request->get("reservation"), true);
         $dateEnvoyee = json_decode($request->get('date'),true);
         $date = (date_create($dateEnvoyee['y'] . "-" . (intval($dateEnvoyee['m']) + 1) . "-" . $dateEnvoyee['d']  . " " . $dateEnvoyee['h'] . ":" . $dateEnvoyee['i']));
+
+        $coupon = $promotionnalCodeRepository->findOneBy(['code' => $result['_code']]);
 
         $commande->setArrivee($result['_adresseArrivee'])
             ->setDate($date)
@@ -37,9 +42,18 @@ class CommandeController extends MhaController
             ->setNomPrenom($result['_nom'] . " " . $result['_prenom'])
             ->setTelephone($result['_numero'])
             ->setDepart($result['_adresseDepart'])
-            ->setPrixApproximatif($this->getPrix($this->getDistance($commande->getDepart(),$commande->getArrivee()),intval(date_format($commande->getDate(),"H"))))
             ->setValidation(false)
             ->setCode(bin2hex(random_bytes(16)));
+        if($coupon){
+            $commande->setPrixApproximatif($this->getPrix($this->getDistance($commande->getDepart(),$commande->getArrivee()),intval(date_format($commande->getDate(),"H"))) - $coupon->getDiscount());
+            $commande->setCoupon($coupon);
+            $coupon->setUsesLeft($coupon->getUsesLeft() - 1 );
+            $entityManager->persist($coupon);
+        }
+        else{
+            $commande->setPrixApproximatif($this->getPrix($this->getDistance($commande->getDepart(),$commande->getArrivee()),intval(date_format($commande->getDate(),"H"))));
+
+        }
         if (!$clientService->findIfExists($commande->getEmail())) {
             $user = new Client();
             $user->setName($commande->getNomPrenom())
@@ -57,6 +71,9 @@ class CommandeController extends MhaController
                 ->setCommande($commande)
                 ->setPrix($commande->getPrixApproximatif())
                 ->setCode('tmp');
+            if($coupon){
+                $paiement->setCoupon($coupon);
+            }
 
             $commande->setPaiementMethod('carte');
             $entityManager->persist($paiement);
@@ -101,6 +118,7 @@ class CommandeController extends MhaController
             $mailService->sendMHAMail($commande);
         }
 
+
         return new Response($response);
     }
 
@@ -130,6 +148,27 @@ class CommandeController extends MhaController
     public function reservation()
     {
         return $this->render('mha/pages/reservationWebApp.html.twig');
+    }
+
+    /**
+     * @Route("/xhr/checkCoupon", name="checkCoupon")
+     */
+    public function checkCoupon(Request $request,PromotionnalCodeRepository $promotionnalCodeRepository){
+        $code = $request->get('coupon');
+        if($code){
+            $promotionnalCode = $promotionnalCodeRepository->findOneBy(['code' => $code]);
+            if($promotionnalCode){
+                $actualDate = new DateTime();
+                if($promotionnalCode->getUsesLeft() > 0 && $promotionnalCode->getExpireDate()->getTimestamp() > $actualDate->getTimestamp()){
+                    return new JsonResponse([
+                        'code' => $promotionnalCode->getCode(),
+                        'discount' => $promotionnalCode->getDiscount()
+                    ]);
+                }
+            }
+        }
+        return new Response('false');
+
     }
 
 

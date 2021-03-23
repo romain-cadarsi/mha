@@ -43,6 +43,11 @@ class Paiement
      */
     private $commande;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PromotionnalCode::class)
+     */
+    private $coupon;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Paiement
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getCoupon(): ?PromotionnalCode
+    {
+        return $this->coupon;
+    }
+
+    public function setCoupon(?PromotionnalCode $coupon): self
+    {
+        $this->coupon = $coupon;
 
         return $this;
     }

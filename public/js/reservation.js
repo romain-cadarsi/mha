@@ -12,7 +12,8 @@ class Reservation {
         this._mail = null ;
         this._distance = null ;
         this._paiementMethod = null ;
-
+        this._discount = null;
+        this._code = null;
     }
 
     getAddresseDepart() {
@@ -58,8 +59,9 @@ class Reservation {
                     'h' :  date._d.getHours()
                 }),
             }).done(function (data){
-                this._prix = JSON.parse(data)['prix']
-                $('#prix').html(this._prix);
+                reservation._prix = JSON.parse(data)['prix']
+                $('#prix').html(reservation._prix);
+                $('#prixAvantReduc').html(reservation._prix)
             })
         }
 
@@ -117,6 +119,25 @@ class Reservation {
 
     setPaiementMethod(value) {
         this._paiementMethod = value;
+    }
+
+    setDiscount(value){
+        this._discount = value;
+        this._prix = this.getPrix() - value < 0 ? 0 : this.getPrix() - value
+        $('#reduc').html(value);
+        $('#prix').html(this.getPrix() )
+    }
+
+    getDiscount(){
+        return this._discount;
+    }
+
+    getCode() {
+        return this._code;
+    }
+
+    setCode(value) {
+        this._code = value;
     }
 
     fillConfirmation(){

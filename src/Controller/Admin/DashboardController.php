@@ -6,6 +6,8 @@ use App\Entity\Blog;
 use App\Entity\Client;
 use App\Entity\Commande;
 use App\Entity\Image;
+use App\Entity\Paiement;
+use App\Entity\PromotionnalCode;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -35,6 +37,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('Commandes'),
             MenuItem::linkToCrud('Commandes', 'fa fa-file', Commande::class),
             MenuItem::linkToCrud('Clients enregistrés', 'fa fa-user', Client::class),
+            MenuItem::linkToCrud('Code promo', 'fa fa-tags', PromotionnalCode::class),
+            MenuItem::linkToCrud('Paiements', 'fa fa-credit-card', Paiement::class),
 
             MenuItem::section('Pages questions/réponses'),
             MenuItem::linkToCrud('Blogs', 'fa fa-blog', Blog::class),

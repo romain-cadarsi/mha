@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Commande;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -36,6 +37,7 @@ class CommandeCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField::new('id'),
             TextField::new('nomPrenom'),
             TextField::new('email'),
             TextField::new('telephone'),
@@ -45,6 +47,7 @@ class CommandeCrudController extends AbstractCrudController
             NumberField::new('prixApproximatif'),
             BooleanField::new('validation'),
             BooleanField::new('effectue'),
+            AssociationField::new('coupon')
         ];
     }
 

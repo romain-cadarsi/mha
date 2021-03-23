@@ -79,6 +79,11 @@ class Commande
      */
     private $paiementMethod;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=PromotionnalCode::class)
+     */
+    private $coupon;
+
     public function __construct()
     {
         $this->paiements = new ArrayCollection();
@@ -247,6 +252,18 @@ class Commande
     public function setPaiementMethod(string $paiementMethod): self
     {
         $this->paiementMethod = $paiementMethod;
+
+        return $this;
+    }
+
+    public function getCoupon(): ?PromotionnalCode
+    {
+        return $this->coupon;
+    }
+
+    public function setCoupon(?PromotionnalCode $coupon): self
+    {
+        $this->coupon = $coupon;
 
         return $this;
     }
